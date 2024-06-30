@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log", "Norman.Log\Norman.Log.csproj", "{37B6CB86-EE9B-4919-B734-33C71528E5ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Server", "Norman.Log.Server\Norman.Log.Server.csproj", "{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Monitor.Demo", "Norman.Log.Monitor.Demo\Norman.Log.Monitor.Demo.csproj", "{A8DE80A6-CAE5-482A-A775-26B67BDA8703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Logger", "Norman.Log.Logger\Norman.Log.Logger.csproj", "{F21079F1-2387-47AA-B4F2-97F637D89C8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Component", "Component", "{9D93D6F5-26CE-4044-B531-1A839168A584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.FileWriter", "Norman.Log.Component.FileWriter\Norman.Log.Component.FileWriter.csproj", "{A48D21EE-9F58-4972-8B81-B44D09E49320}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{51E7D78A-9214-4C16-A897-A377980AA5DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerTest", "LoggerTest\LoggerTest.csproj", "{2F45E494-5C89-42C4-B54F-CDDEF4733F96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37B6CB86-EE9B-4919-B734-33C71528E5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B6CB86-EE9B-4919-B734-33C71528E5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B6CB86-EE9B-4919-B734-33C71528E5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B6CB86-EE9B-4919-B734-33C71528E5ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48D21EE-9F58-4972-8B81-B44D09E49320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48D21EE-9F58-4972-8B81-B44D09E49320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48D21EE-9F58-4972-8B81-B44D09E49320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48D21EE-9F58-4972-8B81-B44D09E49320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A48D21EE-9F58-4972-8B81-B44D09E49320} = {9D93D6F5-26CE-4044-B531-1A839168A584}
+		{2F45E494-5C89-42C4-B54F-CDDEF4733F96} = {51E7D78A-9214-4C16-A897-A377980AA5DE}
+	EndGlobalSection
+EndGlobal
