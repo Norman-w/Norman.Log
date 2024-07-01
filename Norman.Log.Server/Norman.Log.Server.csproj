@@ -7,4 +7,18 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Grpc.AspNetCore.Web" Version="2.63.0" />
+      <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
+      <PackageReference Include="protobuf-net.Grpc.AspNetCore.Reflection" Version="1.1.1" />
+      <PackageReference Include="protobuf-net.Grpc.Reflection" Version="1.1.1" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.6.2" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.6.2" />
+      <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="CommonFacade\GRPC\Proto\" />
+    </ItemGroup>
+
 </Project>
