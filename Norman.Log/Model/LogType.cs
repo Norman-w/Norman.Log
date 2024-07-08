@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Norman.Log.Model
 {
 	public partial class LogType
@@ -50,6 +52,29 @@ namespace Norman.Log.Model
 			return Code.GetHashCode() ^ Name.GetHashCode() ^ Value.GetHashCode();
 		}
 
+		#endregion
+
+		#region 遍历方法,通过使用 LogType[1] 的方式获取已知的 LogType,或者使用code: LogType["Info"] 的方式获取已知的 LogType 以及使用名字 LogType["Info", true] 的方式获取已知的 LogType
+
+		private static LogType[] _knownLogTypes;
+		private static LogType[] MapKnownLogTypes()
+		{
+			//反射获取所有的静态字段
+			var fields = typeof(LogType).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+			var logTypes = new LogType[fields.Length];
+			for (var i = 0; i < fields.Length; i++)
+			{
+				logTypes[i] = fields[i].GetValue(null) as LogType;
+			}
+			return logTypes;
+		}
+		
+		public static LogType[] KnownLogTypes => _knownLogTypes ?? (_knownLogTypes = MapKnownLogTypes());
+		
+		public LogType this[uint value] => KnownLogTypes.FirstOrDefault(lt => lt.Value == value);
+		public LogType this[string code] => KnownLogTypes.FirstOrDefault(lt => lt.Code == code);
+		public LogType this[string name, bool isName] => KnownLogTypes.FirstOrDefault(lt => lt.Name == name);
+		
 		#endregion
 	}
 }
