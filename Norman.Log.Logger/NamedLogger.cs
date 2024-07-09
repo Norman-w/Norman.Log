@@ -22,7 +22,6 @@
 */
 
 using System;
-using Norman.Log.Component.DatabaseWriter;
 using Norman.Log.Config;
 using Norman.Log.Model;
 
