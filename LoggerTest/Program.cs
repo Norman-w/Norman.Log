@@ -12,7 +12,7 @@ Console.WriteLine("日志记录器测试程序,正在启动...");
 
 #region 参数定义
 
-const int totalLogCount = 1000000;
+const int totalLogCount = 100000;
 var currentLogCount = 0;
 //记录程序启动时间
 var startTime = DateTime.Now;
@@ -44,5 +44,6 @@ Console.WriteLine("日志记录器测试程序,已结束.");
 var endTime = DateTime.Now;
 var timeSpan = endTime - startTime;
 Console.WriteLine($"总共记录{totalLogCount}条日志,总共耗时:{timeSpan.TotalSeconds}秒.");
+
 
 #endregion

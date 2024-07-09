@@ -4,6 +4,7 @@
 
 */
 
+using Norman.Log.Component.DatabaseWriter;
 using Norman.Log.Component.FileWriter;
 using Norman.Log.Config;
 
@@ -20,5 +21,11 @@ namespace Norman.Log.Logger
 		/// 日志文件写入器
 		/// </summary>
 		public static LogFileWriter LogFileWriter => _logFileWriter??(_logFileWriter = new LogFileWriter(AppConfig.LoggerConfig.LogToFile));
+
+		private static LogDatabaseWriter _logDatabaseWriter;
+		/// <summary>
+		/// 日志数据库写入器
+		/// </summary>
+		public static LogDatabaseWriter LogDatabaseWriter => _logDatabaseWriter??(_logDatabaseWriter = new LogDatabaseWriter(AppConfig.LoggerConfig.LogToDatabase));
 	}
 }

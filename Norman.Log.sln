@@ -16,6 +16,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{51E7D78A-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerTest", "LoggerTest\LoggerTest.csproj", "{2F45E494-5C89-42C4-B54F-CDDEF4733F96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Monitor", "Norman.Log.Monitor\Norman.Log.Monitor.csproj", "{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.Database.Mysql_Net7Example", "Norman.Log.Component.Database.Mysql_Net7Example\Norman.Log.Component.Database.Mysql_Net7Example.csproj", "{28B3423D-0EAC-40D0-B388-470171A5A1AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.Database.Mysql", "Norman.Log.Component.Database.Mysql\Norman.Log.Component.Database.Mysql.csproj", "{ACD82683-066A-4BB1-84AC-89A3FF7CCC48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.Database.Mysql.EfCoreStarter", "Norman.Log.Component.Database.Mysql.EfCoreStarter\Norman.Log.Component.Database.Mysql.EfCoreStarter.csproj", "{A5A689FD-C19C-4974-BE37-B2D5F4FF113C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.DatabaseWriter", "Norman.Log.Component.DatabaseWriter\Norman.Log.Component.DatabaseWriter.csproj", "{F6DB5B3F-78E8-4C2E-850E-EBB216F414C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,9 +56,33 @@ Global
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD82683-066A-4BB1-84AC-89A3FF7CCC48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD82683-066A-4BB1-84AC-89A3FF7CCC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD82683-066A-4BB1-84AC-89A3FF7CCC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD82683-066A-4BB1-84AC-89A3FF7CCC48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5A689FD-C19C-4974-BE37-B2D5F4FF113C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5A689FD-C19C-4974-BE37-B2D5F4FF113C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5A689FD-C19C-4974-BE37-B2D5F4FF113C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5A689FD-C19C-4974-BE37-B2D5F4FF113C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6DB5B3F-78E8-4C2E-850E-EBB216F414C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6DB5B3F-78E8-4C2E-850E-EBB216F414C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6DB5B3F-78E8-4C2E-850E-EBB216F414C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6DB5B3F-78E8-4C2E-850E-EBB216F414C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A48D21EE-9F58-4972-8B81-B44D09E49320} = {9D93D6F5-26CE-4044-B531-1A839168A584}
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96} = {51E7D78A-9214-4C16-A897-A377980AA5DE}
+		{28B3423D-0EAC-40D0-B388-470171A5A1AA} = {9D93D6F5-26CE-4044-B531-1A839168A584}
+		{ACD82683-066A-4BB1-84AC-89A3FF7CCC48} = {9D93D6F5-26CE-4044-B531-1A839168A584}
+		{A5A689FD-C19C-4974-BE37-B2D5F4FF113C} = {9D93D6F5-26CE-4044-B531-1A839168A584}
+		{F6DB5B3F-78E8-4C2E-850E-EBB216F414C7} = {9D93D6F5-26CE-4044-B531-1A839168A584}
 	EndGlobalSection
 EndGlobal

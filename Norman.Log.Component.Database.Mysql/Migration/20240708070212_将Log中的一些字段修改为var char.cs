@@ -1,0 +1,66 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace Norman.Log.Component.Database.Mysql.Migration
+{
+    public partial class 将Log中的一些字段修改为varchar : Microsoft.EntityFrameworkCore.Migrations.Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            //修改Summary修改为1024
+            migrationBuilder.AlterColumn<string>(
+                name: "Summary",
+                table: "Log",
+                type: "varchar(1024)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "longtext CHARACTER SET utf8mb4",
+                oldNullable: true);
+            //修改LoggerName和Model长度为256
+            migrationBuilder.AlterColumn<string>(
+                name: "LoggerName",
+                table: "Log",
+                type: "varchar(256)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "longtext CHARACTER SET utf8mb4",
+                oldNullable: true);
+            migrationBuilder.AlterColumn<string>(
+                name: "Module",
+                table: "Log",
+                type: "varchar(256)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "longtext CHARACTER SET utf8mb4",
+                oldNullable: true);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            //改回去
+            migrationBuilder.AlterColumn<string>(
+                name: "Summary",
+                table: "Log",
+                type: "longtext CHARACTER SET utf8mb4",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "varchar(1024)",
+                oldNullable: true);
+            migrationBuilder.AlterColumn<string>(
+                name: "LoggerName",
+                table: "Log",
+                type: "longtext CHARACTER SET utf8mb4",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "varchar(256)",
+                oldNullable: true);
+            migrationBuilder.AlterColumn<string>(
+                name: "Module",
+                table: "Log",
+                type: "longtext CHARACTER SET utf8mb4",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "varchar(256)",
+                oldNullable: true);
+        }
+    }
+}

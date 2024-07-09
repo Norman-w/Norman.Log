@@ -22,6 +22,7 @@
 */
 
 using System;
+using Norman.Log.Component.DatabaseWriter;
 using Norman.Log.Config;
 using Norman.Log.Model;
 
@@ -48,9 +49,9 @@ namespace Norman.Log.Logger
 			log.LoggerName = Name;
 			if (AppConfig.LoggerConfig.LogToFile?.OnOff == true)
 				App.LogFileWriter.AddLogToWaitingToWriteQueue(log);
-			// //TODO 添加推送到日志服务器,推送到数据库等的代码
-			// if(AppConfig.LoggerConfig.LogToServer?.OnOff == true)
-			//     App.LogServerWriter.AddLogToWaitingToWriteQueue(log);
+			if (AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)
+				App.LogDatabaseWriter.AddLogToWaitingToWriteQueue(log);
+			// //TODO 添加推送到日志服务器等的代码
 			// if(AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)
 			//     App.LogDatabaseWriter.AddLogToWaitingToWriteQueue(log);
 		}

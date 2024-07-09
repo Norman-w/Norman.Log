@@ -44,7 +44,23 @@ namespace Norman.Log.Logger
 		/// </summary>
 		public static void Flush()
 		{
-			App.LogFileWriter.Flush();
+			try
+			{
+				App.LogFileWriter.Flush();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"强制写入日志文件失败:{e}");
+			}
+
+			try
+			{
+				App.LogDatabaseWriter.Flush();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"强制写入日志数据库失败:{e}");
+			}
 		}
 
 		#region 模拟Orion的调用方式
