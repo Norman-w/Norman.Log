@@ -21,4 +21,8 @@
       <Folder Include="CommonFacade\GRPC\Proto\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Norman.Log\Norman.Log.csproj" />
+    </ItemGroup>
+
 </Project>
