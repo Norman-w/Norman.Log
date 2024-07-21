@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log", "Norman.Log\No
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Server", "Norman.Log.Server\Norman.Log.Server.csproj", "{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Monitor.Demo", "Norman.Log.Monitor.Demo\Norman.Log.Monitor.Demo.csproj", "{A8DE80A6-CAE5-482A-A775-26B67BDA8703}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Logger", "Norman.Log.Logger\Norman.Log.Logger.csproj", "{F21079F1-2387-47AA-B4F2-97F637D89C8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Component", "Component", "{9D93D6F5-26CE-4044-B531-1A839168A584}"
@@ -42,10 +40,6 @@ Global
 		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B1877DF-F07C-49E4-AFC6-24E779BB94D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8DE80A6-CAE5-482A-A775-26B67BDA8703}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F21079F1-2387-47AA-B4F2-97F637D89C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
