@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{51E7D78A-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerTest", "LoggerTest\LoggerTest.csproj", "{2F45E494-5C89-42C4-B54F-CDDEF4733F96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Monitor", "Norman.Log.Monitor\Norman.Log.Monitor.csproj", "{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.Database.Mysql_Net7Example", "Norman.Log.Component.Database.Mysql_Net7Example\Norman.Log.Component.Database.Mysql_Net7Example.csproj", "{28B3423D-0EAC-40D0-B388-470171A5A1AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norman.Log.Component.Database.Mysql", "Norman.Log.Component.Database.Mysql\Norman.Log.Component.Database.Mysql.csproj", "{ACD82683-066A-4BB1-84AC-89A3FF7CCC48}"
@@ -62,10 +60,6 @@ Global
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F45E494-5C89-42C4-B54F-CDDEF4733F96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E45860E-DF88-4BB5-8DD3-C69C8CC5A8CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B3423D-0EAC-40D0-B388-470171A5A1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
