@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <Folder Include="CommonFacade\GRPC\Proto\" />
+      <Folder Include="grpcProtoFiles\" />
     </ItemGroup>
 
     <ItemGroup>
