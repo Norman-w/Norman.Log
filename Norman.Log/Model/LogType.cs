@@ -75,6 +75,33 @@ namespace Norman.Log.Model
 		public LogType this[string code] => KnownLogTypes.FirstOrDefault(lt => lt.Code == code);
 		public LogType this[string name, bool isName] => KnownLogTypes.FirstOrDefault(lt => lt.Name == name);
 		
+		
+		
+		#endregion
+
+		#region 工厂方法,值转换
+
+		
+		/// <summary>
+		/// 通过值获取已知的 LogType,如果没有找到则返回null
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static LogType FromValue(uint value) => KnownLogTypes.FirstOrDefault(lt => lt.Value == value);
+		/// <summary>
+		/// 通过编码获取已知的 LogType,如果没有找到则返回null
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		public static LogType FromCode(string code) => KnownLogTypes.FirstOrDefault(lt => lt.Code == code);
+		/// <summary>
+		/// 通过名称获取已知的 LogType,如果没有找到则返回null
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static LogType FromName(string name) => KnownLogTypes.FirstOrDefault(lt => lt.Name == name);
+
+
 		#endregion
 	}
 }

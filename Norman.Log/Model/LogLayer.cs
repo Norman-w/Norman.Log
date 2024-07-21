@@ -120,5 +120,29 @@ namespace Norman.Log.Model
 		 
 
 		#endregion
+
+		#region 工厂方法,转换
+
+		/// <summary>
+		/// 使用值转换为 LogLayer,如果未找到则返回null
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static LogLayer FromValue(uint value) => KnownLogLayers.FirstOrDefault(l => l.Value == value);
+		/// <summary>
+		/// 使用编码转换为 LogLayer,如果未找到则返回null
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		public static LogLayer FromCode(string code) => KnownLogLayers.FirstOrDefault(l => l.Code == code);
+		/// <summary>
+		/// 使用名称转换为 LogLayer,如果未找到则返回null
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static LogLayer FromName(string name) => KnownLogLayers.FirstOrDefault(l => l.Name == name);
+		
+
+		#endregion
 	}
 }
