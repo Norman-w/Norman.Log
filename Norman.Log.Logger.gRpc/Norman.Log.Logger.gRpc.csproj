@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Norman.Log.Logger\Norman.Log.Logger.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.27.2"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.64.0"/>
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.64.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.65.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="Proto/ReportLogService.proto" GrpcServices="Client"/>
+    </ItemGroup>
+
+</Project>
