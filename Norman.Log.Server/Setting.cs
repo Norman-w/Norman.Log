@@ -8,6 +8,8 @@ namespace Norman.Log.Server;
 internal class Setting
 {
 	public int GrpcPort { get; set; } = 5011;
+	
+	public int GrpcWebPort { get; set; } = 5012;
 	/// <summary>
 	/// 控制面板设置
 	/// </summary>
