@@ -30,7 +30,7 @@ namespace Norman.Log.Logger
 	/// <summary>
 	/// 命名的Logger,用于区分不同的日志记录器
 	/// </summary>
-	public class NamedLogger : IDisposable
+	public class NamedLogger : IDisposable, IReporter
 	{
 		public string Name { get; }
 
@@ -43,7 +43,7 @@ namespace Norman.Log.Logger
 		/// 记录/写日志,传入Log对象
 		/// </summary>
 		/// <param name="log"></param>
-		public void Write(Model.Log log)
+		public virtual void Write(Model.Log log)
 		{
 			log.LoggerName = Name;
 			if (AppConfig.LoggerConfig.LogToFile?.OnOff == true)
@@ -84,5 +84,8 @@ namespace Norman.Log.Logger
 		{
 			throw new NotImplementedException();
 		}
+
+		public event LogReceivedEventHandler LogReceived;
+		public event ReporterSessionCreatedEventHandler ReporterSessionCreated;
 	}
 }
