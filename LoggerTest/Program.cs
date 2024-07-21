@@ -7,12 +7,13 @@
 
 using Norman.Log.Config;
 using Norman.Log.Logger;
+using GrpcNamedLogger = Norman.Log.Logger.gRpc.NamedLogger;
 
 Console.WriteLine("日志记录器测试程序,正在启动...");
 
 #region 参数定义
 
-const int totalLogCount = 100000;
+const int totalLogCount = 10;
 var currentLogCount = 0;
 //记录程序启动时间
 var startTime = DateTime.Now;
@@ -20,6 +21,10 @@ var startTime = DateTime.Now;
 #endregion
 
 Console.WriteLine($"日志将输出到路径:{AppConfig.LoggerConfig.LogToFile.RootPath}");
+
+//使用Grpc日志记录器
+var grpcNamedLogger = new GrpcNamedLogger("Default", "http://localhost:5011");
+LogHelper.UseNamedLogger(grpcNamedLogger);
 
 #region 生成并输出到日志记录器
 
