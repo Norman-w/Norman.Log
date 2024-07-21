@@ -9,8 +9,8 @@ namespace Norman.Log.Model
 	/// </summary>
 	public class Log
 	{
-		public readonly DateTime CreateTime = DateTime.Now;
-		public readonly Guid Id = Guid.NewGuid();
+		public DateTime CreateTime = DateTime.Now;
+		public Guid Id = Guid.NewGuid();
 		/// <summary>
 		/// 日志记录器的名称,比如 AuthLogger, SessionLogger, RequestLogger等,默认的是DefaultLogger
 		/// </summary>
