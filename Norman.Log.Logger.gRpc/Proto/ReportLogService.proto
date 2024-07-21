@@ -1,0 +1,29 @@
+syntax = "proto3";
+package Norman.Log.Server.Input;
+
+message LogContext {
+   string Role = 1;
+   string Site = 2;
+   string User = 3;
+   string Client = 4;
+   string Request = 5;
+   string Response = 6;
+   repeated string Others = 7;
+}
+message ReportLogByGrpcRequest {
+   string Id = 1;
+   int64 CreateTime = 2;
+   string LoggerName = 3;
+   int32 Type = 4;
+   int32 Layer = 5;
+   string Module = 6;
+   string Summary = 7;
+   string Detail = 8;
+   LogContext LogContext = 9;
+}
+message ReportLogByGrpcResponse {
+   bool Success = 1;
+}
+service ReportLogService {
+   rpc ReportLogByGrpc (ReportLogByGrpcRequest) returns (ReportLogByGrpcResponse);
+}
