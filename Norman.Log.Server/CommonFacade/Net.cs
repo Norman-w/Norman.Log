@@ -10,16 +10,85 @@
 
 
 using System.ComponentModel;
+using System.Net.WebSockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Norman.Log.Server.CommonFacade.GRPC;
+using Norman.Log.Server.Core;
 using ProtoBuf.Grpc.Reflection;
 using ProtoBuf.Grpc.Server;
 
 namespace Norman.Log.Server.CommonFacade;
+
+public delegate Task SessionCreatedEventHandler(SessionCreatedEventArgs session);
+
+public class SessionCreatedEventArgs : EventArgs
+{
+	/// <summary>
+	/// 当新的连接创建时,触发的事件参数
+	/// </summary>
+	/// <param name="sessionId"></param>
+	/// <param name="connection"></param>
+	public SessionCreatedEventArgs(string sessionId, object connection)
+	{
+		SessionId = sessionId;
+		Connection = connection;
+		switch (connection)
+		{
+			case HttpContext httpContext:
+				ConnectionType = ConnectionTypeEnum.Http;
+				var clientTypeHeader = httpContext.Request.Headers["ClientType"];
+				var clientTypeHeaderValues = clientTypeHeader.ToList();
+				if (clientTypeHeader.Count != 1)
+				{
+					throw new Exception("ClientType Header的值不是唯一的");
+				}
+				var clientTypeHeaderValue = clientTypeHeaderValues[0];
+				ClientType = clientTypeHeaderValue == null
+					? ClientTypeEnum.Unknown
+					: Enum.Parse<ClientTypeEnum>(clientTypeHeaderValue);
+				break;
+			// case Grpc.AspNetCore.Server.ServerCallContext _:
+				// ConnectionType = ConnectionTypeEnum.Grpc;
+				// break;
+			case WebSocket webSocket:
+				ConnectionType = ConnectionTypeEnum.WebSocket;
+				ClientType = webSocket.SubProtocol == null
+					? ClientTypeEnum.Unknown
+					: Enum.Parse<ClientTypeEnum>(webSocket.SubProtocol);
+				break;
+			default:
+				ConnectionType = ConnectionTypeEnum.Unknown;
+				break;
+		}
+	}
+
+	/// <summary>
+	/// 会话ID,连接的时候生成的guid(或者是其他的唯一标识,不一定是哪一端生成)
+	/// </summary>
+	public string SessionId { get; }
+	/// <summary>
+	/// 连接类型枚举
+	/// </summary>
+	public ConnectionTypeEnum ConnectionType { get; set; }
+	/// <summary>
+	/// 连接对象
+	/// </summary>
+	public object Connection { get; set; }
+	
+	/// <summary>
+	/// 客户端类型
+	/// </summary>
+	public ClientTypeEnum ClientType { get; set; }
+
+	public override string ToString()
+	{
+		return $"Id:{SessionId}, 连接类型:{ConnectionType}, 客户端类型:{ClientType}, 连接对象:{Connection}";
+	}
+}
 
 /// <summary>
 /// 网络相关请求的入口.
@@ -136,7 +205,7 @@ public class Net
 		#endregion
 	}
 
-	private static void ConfigWebsocket(WebApplication app)
+	private void ConfigWebsocket(WebApplication app)
 	{
 		#region 添加websocket支持
 
@@ -147,7 +216,7 @@ public class Net
 				KeepAliveInterval = TimeSpan.FromSeconds(120),
 			});
 		// 添加WebSocket中间件
-		app.Map("ws", async (context) =>
+		app.Map("/ws", async (context) =>
 		{
 			if (context.WebSockets.IsWebSocketRequest)
 			{
@@ -181,8 +250,10 @@ public class Net
 					var webSocket =
 						await context.WebSockets.AcceptWebSocketAsync(context.WebSockets
 							.WebSocketRequestedProtocols[0]);
-					// await LauncherServerWebSocketServer.Instance.OnClientConnected(webSocket);
-					//TODO: 这里是处理WebSocket的代码,可以在这里处理WebSocket的连接
+					var session = new SessionCreatedEventArgs(Guid.NewGuid().ToString(), webSocket);
+					//触发会话创建事件,并等待他的完整生命周期
+					if (SessionCreatedAsync != null) await SessionCreatedAsync(session);
+					else Console.WriteLine("未处理的会话创建事件");
 				}
 				catch (Exception err)
 				{
@@ -251,8 +322,13 @@ public class Net
 		{
 			options.ListenAnyIP(App.Setting.GrpcPort, listenOptions =>
 			{
-				//如果不使用grpc web,可以只使用http2
-				listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+				//使用grpc客户端时,如果Kestrel同时支持Http1和Http2的时候,无法正常连接.所以开两个端口用于不同的链接
+				listenOptions.Protocols = HttpProtocols.Http2;
+			});
+			options.ListenAnyIP(App.Setting.GrpcWebPort, listenOptions =>
+			{
+				//Grpc Web需要使用Http1
+				listenOptions.Protocols = HttpProtocols.Http1;
 			});
 		});
 
@@ -322,4 +398,8 @@ public class Net
 		//写入proto文件的内容
 		File.WriteAllText(protoFilePath, schema);
 	}
+	/// <summary>
+	/// 异步会话创建事件,当新的会话创建时触发,并等待事件处理完成
+	/// </summary>
+	public event SessionCreatedEventHandler? SessionCreatedAsync;
 }
