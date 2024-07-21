@@ -77,8 +77,8 @@ namespace Norman.Log.Logger
 				LogLayer.Business,
 				"Default",
 				message,
-				null,
-				new Model.Log.Context()
+				"日志的详细描述内容",
+				new Model.Log.Context
 				{
 					Others = new object[] { args }.ToList()
 				});
