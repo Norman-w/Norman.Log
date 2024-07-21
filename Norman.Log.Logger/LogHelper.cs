@@ -9,6 +9,10 @@ namespace Norman.Log.Logger
 	/// </summary>
 	public static class LogHelper
 	{
+		public static void UseNamedLogger<T>(T logger) where T: NamedLogger
+		{
+			_defaultNamedLogger = logger;
+		}
 		private static NamedLogger _defaultNamedLogger;
 
 		/// <summary>
