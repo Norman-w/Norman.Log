@@ -9,4 +9,9 @@ public static class App
 	/// 应用程序的设置
 	/// </summary>
 	internal static Setting Setting { get; } = new();
+
+	/// <summary>
+	/// core server的实例
+	/// </summary>
+	internal static readonly Core.Server Server = new();
 }
