@@ -1,5 +1,11 @@
 # 说明
 
+
+## 当前这个项目就是一个只能写入到文件的日志记录器
+因为他不包含grpc客户端,WebSocket客户端等库,所以他只能写入到文件,不能发送到服务端.
+
+通过不同协议发送到服务端的话,请使用Norman.Log.Logger.gRpc/Norman.Log.Logger.WebSocket等项目.
+
 如果只是希望使用文件来记录日志,可以直接引用这个项目,不需要Norman.Log.Server.
 这时候就可以移除Norman.Log.Server的依赖项和相关的代码.
 
