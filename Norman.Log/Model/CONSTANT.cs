@@ -1,3 +1,4 @@
+using System;
 
 namespace Norman.Log.Model
 {
@@ -21,6 +22,11 @@ namespace Norman.Log.Model
 		/// 时间在文件名中的默认格式
 		/// </summary>
 		public const string DefaultTimeFormatOfFile = "HH_mm_ss";
+		
+		/// <summary>
+		/// 格林尼治时间1970年1月1日0时0分0秒
+		/// </summary>
+		public static DateTime GreenwichTime1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 	}
 	/// <summary>
 	/// 已知静态日志类型
