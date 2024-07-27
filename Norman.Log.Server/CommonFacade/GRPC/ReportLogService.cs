@@ -18,7 +18,7 @@ public class ReportLogService : IReportLogService
 		/// <returns></returns>
 		public static Log.Model.Log ToLog(ReportLogByGrpcRequest request)
 		{
-			var createTime = Constant.GreenwichTime1970.AddMicroseconds(request.CreateTime);
+			var createTime = Constant.GreenwichTime1970.AddMilliseconds(request.CreateTime);
 			var logType = LogType.FromValue((uint)request.Type);
 			var logLayer = LogLayer.FromValue((uint)request.Layer);
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
