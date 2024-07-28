@@ -45,7 +45,6 @@ namespace Norman.Log.Logger
 		/// <param name="log"></param>
 		public virtual void Write(Model.Log log)
 		{
-			log.LoggerName = Name;
 			if (AppConfig.LoggerConfig.LogToFile?.OnOff == true)
 				App.LogFileWriter.AddLogToWaitingToWriteQueue(log);
 			if (AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)
@@ -67,14 +66,13 @@ namespace Norman.Log.Logger
 		public void Write(LogType logType, LogLayer logLayer, string moduleName, string summary, string detail,
 			Model.Log.Context context = null)
 		{
-			var log = new Model.Log
+			var log = new Model.Log(Name)
 			{
 				Type = logType,
 				Layer = logLayer,
 				Summary = summary,
 				Detail = detail,
 				Module = moduleName,
-				LoggerName = Name,
 				LogContext = context
 			};
 			Write(log);

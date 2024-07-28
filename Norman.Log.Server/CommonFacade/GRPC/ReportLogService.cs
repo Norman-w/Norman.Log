@@ -26,10 +26,10 @@ public class ReportLogService : IReportLogService
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 			var id = request.Id == null? Guid.NewGuid(): Guid.Parse(request.Id);
 			
-			return new Log.Model.Log
+			return new Log.Model.Log(request.LoggerName)
 			{
 				CreateTime = createTime, Id = id, Summary = request.Summary,
-				Detail = request.Detail, Type = logType, Layer = logLayer, Module = request.Module, LoggerName = request.LoggerName, LogContext = logContext
+				Detail = request.Detail, Type = logType, Layer = logLayer, Module = request.Module, LogContext = logContext
 			};
 		}
 
