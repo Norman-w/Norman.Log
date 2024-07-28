@@ -9,12 +9,20 @@ namespace Norman.Log.Model
 	/// </summary>
 	public class Log
 	{
+		public Log(string loggerName)
+		{
+			if (string.IsNullOrWhiteSpace(loggerName))
+			{
+				throw new ArgumentNullException(nameof(loggerName));
+			}
+			LoggerName = loggerName;
+		}
 		public DateTime CreateTime = DateTime.Now;
 		public Guid Id = Guid.NewGuid();
 		/// <summary>
 		/// 日志记录器的名称,比如 AuthLogger, SessionLogger, RequestLogger等,默认的是DefaultLogger
 		/// </summary>
-		public string LoggerName { get; set; } = Constant.DefaultLoggerName;
+		public string LoggerName { get; private set; }
 		/// <summary>
 		/// 日志类型,比如:错误,警告,信息等
 		/// </summary>
