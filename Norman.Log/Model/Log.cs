@@ -109,5 +109,38 @@ namespace Norman.Log.Model
 			_bytes = System.Text.Encoding.UTF8.GetBytes(ToString());
 			return _bytes;
 		}
+
+		/// <summary>
+		/// 从LogRecord4Net转换为Log
+		/// </summary>
+		/// <param name="logRecord4Net"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException"></exception>
+		public static Log FromLogRecord4Net(LogRecord4Net logRecord4Net)
+		{
+			if (logRecord4Net == null)
+			{
+				throw new ArgumentNullException(nameof(logRecord4Net));
+			}
+
+			var context = new Context();
+			var contextJsonFromLogRecord4Net = logRecord4Net.LogContext == null? "": JsonConvert.SerializeObject(logRecord4Net.LogContext);
+			if (!string.IsNullOrWhiteSpace(contextJsonFromLogRecord4Net))
+			{
+				JsonConvert.PopulateObject(contextJsonFromLogRecord4Net, context);
+			}
+
+			var log = new Log(logRecord4Net.LoggerName)
+			{
+				Type = LogType.FromValue(logRecord4Net.Type),
+				Layer = LogLayer.FromValue(logRecord4Net.Layer),
+				Module = logRecord4Net.Module,
+				Summary = logRecord4Net.Summary,
+				Detail = logRecord4Net.Detail,
+				LogContext = context, LoggerName = logRecord4Net.LoggerName,
+				CreateTime = DateTime.Parse(logRecord4Net.CreateTime), Id = Guid.Parse(logRecord4Net.Id)
+			};
+			return log;
+		}
 	}
 }
