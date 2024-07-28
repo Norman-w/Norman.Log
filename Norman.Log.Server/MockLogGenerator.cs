@@ -66,12 +66,12 @@ public static class MockLogGenerator
 	//生成随机的日志
 	private static Model.Log RandomLog()
 	{
-		var log = new Model.Log
+		var log = new Model.Log(RandomString(5))
 		{
 			Summary = RandomString(10),
 			Detail = RandomString(200),
 			Type = RandomLogType(),
-			Layer = RandomLogLayer(), LoggerName = RandomString(5), Module = RandomString(5),
+			Layer = RandomLogLayer(), Module = RandomString(5),
 		};
 		return log;
 	}
