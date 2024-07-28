@@ -45,6 +45,7 @@ namespace Norman.Log.Logger.gRpc
 			base.Write(log);
 			//在父类完成了日志记录后，再将日志通过grpc传输到远程服务器
 			var request = log.ToReportLogByGrpcRequest();
+			request.LoggerName = Name;
 
 			// 异步调用 ReportLogByGrpc 方法
 			try

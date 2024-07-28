@@ -207,17 +207,18 @@ namespace Norman.Log.Component.FileWriter
 		/// 将日志对象添加到待写入的日志缓冲中
 		/// 如果缓冲中的日志条数达到最大值则写入文件
 		/// </summary>
+		/// <param name="loggerName"></param>
 		/// <param name="log"></param>
-		public void AddLogToWaitingToWriteQueue(Model.Log log)
+		public void AddLogToWaitingToWriteQueue(string loggerName, Model.Log log)
 		{
-			Util.CalcLogFileAndFolderName(log.LoggerName, DateTime.Now, _config, out var fileName, out var folderName);
+			Util.CalcLogFileAndFolderName(loggerName, DateTime.Now, _config, out var fileName, out var folderName);
 			var fileFullPathForIndex = Path.Combine(_config.RootPath, folderName, fileName);
 			var hasThisFilePool = IndexedByFileFullPathLogsPoolInfos.ContainsKey(fileFullPathForIndex);
 			var currentPool = hasThisFilePool
 				? IndexedByFileFullPathLogsPoolInfos[fileFullPathForIndex]
 				: new LogsPoolInfo
 				{
-					LoggerName = log.LoggerName,
+					LoggerName = loggerName,
 					FolderName = folderName,
 					LastWriteTime = DateTime.MinValue
 				};
@@ -230,7 +231,7 @@ namespace Norman.Log.Component.FileWriter
 			}
 
 			//追加log以后,文件的路径可能会有所改变,所以要重新获取一次
-			var fileFullPathForWrite = GetFullPathForWrite(log.LoggerName, currentPool.ContinuePart);
+			var fileFullPathForWrite = GetFullPathForWrite(loggerName, currentPool.ContinuePart);
 
 			var currentWaitingToWriteLogsCount = currentPool.GetWaitingToWriteLogsCount();
 			//检查条数,如果够了则写入
@@ -371,7 +372,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <param name="logsPoolInfo"></param>
 		private void WriteLogsToFileAutoCreateFolderOrFileIfNeeded(string folderName, string fullPath, LogsPoolInfo logsPoolInfo)
 		{
-			var fileName = Path.GetFileName(fullPath);
+			// var fileName = Path.GetFileName(fullPath);
 
 			#region 不推荐的方法,每次都询问一下是否存在文件夹和文件,这样会增加IO,降低性能
 

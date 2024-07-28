@@ -19,7 +19,7 @@ namespace Norman.Log.Logger.gRpc
 				Id = log.Id.ToString(),
 				Detail = log.Detail,
 				Layer = (int)log.Layer.Value,
-				Type = (int)log.Type.Value, Module = log.Module, Summary = log.Summary, LoggerName = log.LoggerName,
+				Type = (int)log.Type.Value, Module = log.Module, Summary = log.Summary,
 				LogContext = log.LogContext.ToGrpcLogContext()
 			};
 		}

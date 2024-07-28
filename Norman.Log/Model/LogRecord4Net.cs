@@ -42,7 +42,6 @@ namespace Norman.Log.Model
 			{
 				CreateTime = log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
 				Id = log.Id.ToString(),
-				LoggerName = log.LoggerName,
 				Type = log.Type.Value,
 				Layer = log.Layer.Value,
 				Module = log.Module,

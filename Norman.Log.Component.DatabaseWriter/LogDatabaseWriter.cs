@@ -38,14 +38,15 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// 转换为数据库模型
 		/// </summary>
 		/// <param name="log"></param>
+		/// <param name="loggerName"></param>
 		/// <returns></returns>
-		public static Database.Mysql.Context.Log ToDbModel(this Model.Log log)
+		public static Database.Mysql.Context.Log ToDbModel(this Model.Log log, string loggerName)
 		{
 			return new Database.Mysql.Context.Log
 			{
 				Id = log.Id,
 				CreateTime = log.CreateTime,
-				LoggerName = log.LoggerName,
+				LoggerName = loggerName,
 				Type = (int)log.Type.Value,
 				Layer = (int)log.Layer.Value,
 				Module = log.Module,
@@ -68,7 +69,7 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// <summary>
 		/// 待写入队列
 		/// </summary>
-		private readonly ConcurrentQueue<Model.Log> _waitingToWriteQueue = new ConcurrentQueue<Model.Log>();
+		private readonly ConcurrentQueue<(Model.Log,string)> _waitingToWriteQueue = new ConcurrentQueue<(Model.Log,string)>();
 		/// <summary>
 		/// 定时器,用于定时写入日志到数据库
 		/// </summary>
@@ -146,15 +147,17 @@ namespace Norman.Log.Component.DatabaseWriter
 			errorMessage = string.Empty;
 			return true;
 		}
+
 		/// <summary>
 		/// 将日志添加到待写入队列中
 		/// 如果够缓冲区大小,则写入到数据库中
 		/// 另外加入到队列中的日志如果没到数量阈值,也会在定时器到达时间之后写入到数据库中
 		/// </summary>
+		/// <param name="loggerName"></param>
 		/// <param name="log"></param>
-		public void AddLogToWaitingToWriteQueue(Model.Log log)
+		public void AddLogToWaitingToWriteQueue(string loggerName, Model.Log log)
 		{
-			_waitingToWriteQueue.Enqueue(log);
+			_waitingToWriteQueue.Enqueue((log,loggerName));
 			if (_waitingToWriteQueue.Count >= _config.MaxLogCountInCache)
 			{
 				//取出最大单次写入数量的日志,如果没有那么多,就全部取出来
@@ -234,13 +237,13 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// 将日志写入到数据库
 		/// </summary>
 		/// <param name="logs"></param>
-		private static void WriteLogsToDatabase(IEnumerable<Model.Log> logs)
+		private static void WriteLogsToDatabase(IEnumerable<(Model.Log,string)> logs)
 		{
 			using (var dbContext = new NormanLogDbContext())
 			{
 				foreach (var log in logs)
 				{
-					dbContext.Log.Add(log.ToDbModel());
+					dbContext.Log.Add(log.Item1.ToDbModel(log.Item2));
 				}
 
 				dbContext.SaveChanges();
@@ -251,9 +254,9 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// 取出最大数量的日志(单次可以写入到数据库的最大量),如果没有那么多,则取出全部
 		/// </summary>
 		/// <returns></returns>
-		private List<Model.Log> TakeoutLogs()
+		private List<(Model.Log,string)> TakeoutLogs()
 		{
-			var logs = new List<Model.Log>();
+			var logs = new List<(Model.Log,string)>();
 			while (_waitingToWriteQueue.TryDequeue(out var log))
 			{
 				logs.Add(log);

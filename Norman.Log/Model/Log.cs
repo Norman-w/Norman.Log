@@ -12,10 +12,6 @@ namespace Norman.Log.Model
 		public DateTime CreateTime = DateTime.Now;
 		public Guid Id = Guid.NewGuid();
 		/// <summary>
-		/// 日志记录器的名称,比如 AuthLogger, SessionLogger, RequestLogger等,默认的是DefaultLogger
-		/// </summary>
-		public string LoggerName { get; set; } = Constant.DefaultLoggerName;
-		/// <summary>
 		/// 日志类型,比如:错误,警告,信息等
 		/// </summary>
 		public LogType Type { get; set; }
@@ -100,6 +96,29 @@ namespace Norman.Log.Model
 				return _bytes;
 			_bytes = System.Text.Encoding.UTF8.GetBytes(ToString());
 			return _bytes;
+		}
+		
+		/// <summary>
+		/// 从LogRecord4Net转换为Log
+		/// </summary>
+		/// <param name="logRecord4Net"></param>
+		/// <returns></returns>
+		public static Log FromLogRecord4Net(LogRecord4Net logRecord4Net)
+		{
+			var context = new Context();
+			var contextJsonFromNet = logRecord4Net.LogContext == null? "" : JsonConvert.SerializeObject(logRecord4Net.LogContext);
+			JsonConvert.PopulateObject(contextJsonFromNet, context);
+			return new Log
+			{
+				CreateTime = DateTime.Parse(logRecord4Net.CreateTime),
+				Id = Guid.Parse(logRecord4Net.Id),
+				Type = LogType.FromValue(logRecord4Net.Type),
+				Layer = LogLayer.FromValue(logRecord4Net.Layer),
+				Module = logRecord4Net.Module,
+				Summary = logRecord4Net.Summary,
+				Detail = logRecord4Net.Detail,
+				LogContext = context
+			};
 		}
 	}
 }

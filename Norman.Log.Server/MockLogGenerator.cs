@@ -64,14 +64,15 @@ public static class MockLogGenerator
 	}
         
 	//生成随机的日志
-	private static Model.Log RandomLog()
+	private static Model.Log RandomLog(out string loggerName)
 	{
+		loggerName = RandomString(5);
 		var log = new Model.Log
 		{
 			Summary = RandomString(10),
 			Detail = RandomString(200),
 			Type = RandomLogType(),
-			Layer = RandomLogLayer(), LoggerName = RandomString(5), Module = RandomString(5),
+			Layer = RandomLogLayer(), Module = RandomString(5),
 		};
 		return log;
 	}
@@ -79,9 +80,9 @@ public static class MockLogGenerator
 	//生成随机的日志,并发送给所有的接收者
 	private static void SendRandomLog(int index, Core.Server server, ReporterClient mockupReporter)
 	{
-		var log = RandomLog();
+		var log = RandomLog(out var loggerName);
 		log.Summary = $"{index}:{log.Summary}";
-		server.HandleLog(mockupReporter, log);
+		server.HandleLog(mockupReporter,loggerName, log);
 	}
 	//生成随机的日志类型方法
 	private static LogType RandomLogType()

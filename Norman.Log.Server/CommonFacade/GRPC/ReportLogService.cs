@@ -15,8 +15,9 @@ public class ReportLogService : IReportLogService
 		/// 将grpc请求转换为日志业务模型
 		/// </summary>
 		/// <param name="request"></param>
+		/// <param name="loggerName"></param>
 		/// <returns></returns>
-		public static Log.Model.Log ToLog(ReportLogByGrpcRequest request)
+		public static Log.Model.Log ToLog(ReportLogByGrpcRequest request, out string loggerName)
 		{
 			var createTime = Constant.GreenwichTime1970.AddMilliseconds(request.CreateTime);
 			var logType = LogType.FromValue((uint)request.Type);
@@ -26,10 +27,11 @@ public class ReportLogService : IReportLogService
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 			var id = request.Id == null? Guid.NewGuid(): Guid.Parse(request.Id);
 			
+			loggerName = request.LoggerName;
 			return new Log.Model.Log
 			{
 				CreateTime = createTime, Id = id, Summary = request.Summary,
-				Detail = request.Detail, Type = logType, Layer = logLayer, Module = request.Module, LoggerName = request.LoggerName, LogContext = logContext
+				Detail = request.Detail, Type = logType, Layer = logLayer, Module = request.Module, LogContext = logContext
 			};
 		}
 
@@ -76,10 +78,10 @@ public class ReportLogService : IReportLogService
 	public Task<ReportLogByGrpcResponse> ReportLogByGrpc(ReportLogByGrpcRequest request, CallContext context = default)
 	{
 		Console.WriteLine($"收到来自{context.ServerCallContext}的日志: {request}");
-		var log = Log4GrpcExtension.ToLog(request);
+		var log = Log4GrpcExtension.ToLog(request, out var loggerName);
 		//TODO: 通过grpc上报日志时,根据CallContext的ServerCallContext信息来获取Reporter Client
 		var mockupGrpcReporter = new ReporterClient(new SessionCreatedEventArgs("mockup grpc reporter client", new object()));
-		App.Server.HandleLog(mockupGrpcReporter, log);
+		App.Server.HandleLog(mockupGrpcReporter, loggerName, log);
 		return Task.FromResult(new ReportLogByGrpcResponse
 		{
 			Success = true

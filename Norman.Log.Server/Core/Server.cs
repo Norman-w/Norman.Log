@@ -30,8 +30,9 @@ public class Server
     /// 处理日志,当从网络/命名管道/内部调用的方式收到日志时,调用此函数
     /// </summary>
     /// <param name="sender"></param>
+    /// <param name="loggerName"></param>
     /// <param name="logEntry"></param>
-    public void HandleLog(object sender, Log.Model.Log logEntry)
+    public void HandleLog(object sender,string loggerName, Log.Model.Log logEntry)
     {
         var client = sender as ReporterClient;
         if (client == null)
@@ -44,7 +45,7 @@ public class Server
         {
             foreach (var receiver in _receiverClients)
             {
-                _ = receiver.Send(logEntry);
+                _ = receiver.Send(loggerName, logEntry);
             }
         }
     }

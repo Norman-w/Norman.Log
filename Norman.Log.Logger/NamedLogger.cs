@@ -45,11 +45,10 @@ namespace Norman.Log.Logger
 		/// <param name="log"></param>
 		public virtual void Write(Model.Log log)
 		{
-			log.LoggerName = Name;
 			if (AppConfig.LoggerConfig.LogToFile?.OnOff == true)
-				App.LogFileWriter.AddLogToWaitingToWriteQueue(log);
+				App.LogFileWriter.AddLogToWaitingToWriteQueue(Name, log);
 			if (AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)
-				App.LogDatabaseWriter.AddLogToWaitingToWriteQueue(log);
+				App.LogDatabaseWriter.AddLogToWaitingToWriteQueue(Name, log);
 			// //TODO 添加推送到日志服务器等的代码
 			// if(AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)
 			//     App.LogDatabaseWriter.AddLogToWaitingToWriteQueue(log);
@@ -74,7 +73,6 @@ namespace Norman.Log.Logger
 				Summary = summary,
 				Detail = detail,
 				Module = moduleName,
-				LoggerName = Name,
 				LogContext = context
 			};
 			Write(log);

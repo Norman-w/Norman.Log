@@ -101,14 +101,18 @@ public class ReceiverClient :IClient
 			Console.WriteLine("发送消息失败,错误信息:" + e.Message);
 		}
 	}
+
 	/// <summary>
 	/// 发送日志
 	/// </summary>
+	/// <param name="loggerName"></param>
 	/// <param name="log"></param>
 	/// <exception cref="ArgumentNullException"></exception>
-	public async Task Send(Log.Model.Log log)
+	public async Task Send(string loggerName, Log.Model.Log log)
 	{
-		var message = LogRecord4Net.FromLog(log).ToJson();
+		var log4NetModel = LogRecord4Net.FromLog(log);
+		log4NetModel.LoggerName = loggerName;
+		var message = log4NetModel.ToJson();
 		await Send(message);
 	}
 }
