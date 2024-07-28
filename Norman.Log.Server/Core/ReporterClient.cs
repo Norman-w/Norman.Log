@@ -11,6 +11,7 @@
 using System.Net.WebSockets;
 using System.Text;
 using Newtonsoft.Json;
+using Norman.Log.Model;
 using Norman.Log.Server.CommonFacade;
 
 namespace Norman.Log.Server.Core;
@@ -78,13 +79,23 @@ public class ReporterClient : IClient
 		await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client disconnected", CancellationToken.None);
 	}
 	
+	/// <summary>
+	/// 从网络收到消息时的回调函数, message是logRecord4Net的json字符串,不是业务模型
+	/// </summary>
+	/// <param name="message"></param>
 	private void OnWebSocketMessageReceived(string message)
 	{
 		try
 		{
-			var log = JsonConvert.DeserializeObject<Log.Model.Log>(message);
+			var logRecord4Net = JsonConvert.DeserializeObject<LogRecord4Net>(message);
+			if (logRecord4Net == null)
+			{
+				Console.WriteLine($"{nameof(OnWebSocketMessageReceived)}: 无法解析日志记录, 请检查日志格式, message: {message}");
+				return;
+			}
 			try
 			{
+				var log = Log.Model.Log.FromLogRecord4Net(logRecord4Net);
 				LogReceived?.Invoke(this, log);
 			}
 			catch (Exception e)
