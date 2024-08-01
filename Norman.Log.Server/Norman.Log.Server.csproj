@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Norman.Log.Component.DatabaseReader\Norman.Log.Component.DatabaseReader.csproj" />
       <ProjectReference Include="..\Norman.Log\Norman.Log.csproj" />
     </ItemGroup>
 
