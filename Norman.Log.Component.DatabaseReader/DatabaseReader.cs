@@ -75,10 +75,5 @@ namespace Norman.Log.Component.DatabaseReader
 				return dbResult;
 			}
 		}
-		// public static List<Log.Model.Log> GetLogs(LogQueryDatabaseArgs query)
-		// {
-		// 	var dbLogs = GetLogsFromDb(query);
-		// 	return dbLogs.Select(x => x.ToBllModel()).ToList();
-		// }
 	}
 }
