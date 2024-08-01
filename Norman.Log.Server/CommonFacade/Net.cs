@@ -283,8 +283,8 @@ public class Net
 
 			app = builder.Build();
 			app.UseGrpcWeb();
-//还需要支持跨域请求
-			app.UseCors();
+			//支持跨域请求
+			app.UseCors("AllowAll");
 
 			#endregion
 
