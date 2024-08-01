@@ -68,7 +68,7 @@ netFacadeServer.SessionCreatedAsync += async session =>
 
 #region Task:启动日志模拟生成器并广播日志给所有接收者
 
-// var mockLogGenerateTask = MockLogGenerator.Start(server);
+var mockLogGenerateTask = MockLogGenerator.Start(App.Server);
 
 #endregion
 
@@ -89,7 +89,7 @@ var userInputTask = Task.Run(() =>
 #endregion
 
 await Task.WhenAny(
-	// mockLogGenerateTask,
+	mockLogGenerateTask,
 	userInputTask
 );
 
