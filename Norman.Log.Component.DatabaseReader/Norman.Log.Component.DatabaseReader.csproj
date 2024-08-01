@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Norman.Log.Component.Database.Mysql\Norman.Log.Component.Database.Mysql.csproj" />
+    </ItemGroup>
+
+</Project>
