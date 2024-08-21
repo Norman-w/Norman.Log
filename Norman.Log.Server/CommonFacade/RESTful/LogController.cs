@@ -13,7 +13,7 @@ using Norman.Log.Component.DatabaseReader;
 using Norman.Log.Model;
 using Norman.Log.Server.Core;
 
-namespace Norman.Log.Server.CommonFacade;
+namespace Norman.Log.Server.CommonFacade.RESTful;
 
 [ApiController]
 [Route("[controller]")]
@@ -22,7 +22,7 @@ public class LogController : ControllerBase
 	/// <summary>
 	/// 日志查询参数
 	/// </summary>
-	public class LogQueryArgs
+	public class LogQueryRequest
 	{
 		/// <summary>
 		/// 查询的开始时间
@@ -57,7 +57,7 @@ public class LogController : ControllerBase
 		/// </summary>
 		public string? ContextTags { get; set; }
 		/// <summary>
-		/// 查询的页码
+		/// 查询的页码,从1开始
 		/// </summary>
 		public int PageNumber { get; set; }
 		/// <summary>
@@ -121,24 +121,66 @@ public class LogController : ControllerBase
 			return args;
 		}
 	}
+	public class LogQueryResponse
+	{
+		public string ErrMsg { get; set; } = string.Empty;
+		public bool IsError => !string.IsNullOrWhiteSpace(ErrMsg);
+		/// <summary>
+		/// 本次查询到的日志
+		/// </summary>
+		public List<LogRecord4Net> Logs { get; set; }
+		/// <summary>
+		/// 符合条件的总日志数量
+		/// </summary>
+		public uint TotalResultCount { get; set; }
+	}
 	[HttpPost]
-	public IActionResult Index(LogQueryArgs query)
+	public IActionResult Index(LogQueryRequest request)
 	{
 		LogQueryDatabaseArgs queryDatabaseArgs;
 		try
 		{
-			queryDatabaseArgs = query.ToLogQueryDatabaseArgs();
+			queryDatabaseArgs = request.ToLogQueryDatabaseArgs();
 		}
 		catch (Exception e)
 		{
 			Console.WriteLine(e);
 			return BadRequest(e.Message);
 		}
-		var dbLogs =DatabaseReader.GetLogsFromDb(queryDatabaseArgs);
+		var dbLogs =DatabaseReader.GetLogsFromDb(queryDatabaseArgs, out var totalResultCount);
 		//转换成业务模型
 		var logs = dbLogs.Select(x=>x.ToBllModel()).ToList();
 		//转换成网络模型
 		var logRecords = logs.Select(LogRecord4Net.FromLog).ToList();
-		return Ok(logRecords);
+		//TODO 移除如下Region代码:
+		#region 如果dbLogs没搜到,生成一些mock日志然后转换成网络模型返回
+		if (logRecords.Count == 0)
+		{
+			for (var i = 0; i < 10; i++)
+			{
+				var randomLog = MockLogGenerator.RandomLog();
+				logRecords.Add(LogRecord4Net.FromLog(randomLog));
+			}
+		}
+		#endregion
+		var response = new LogQueryResponse
+		{
+			Logs = logRecords,
+			TotalResultCount = totalResultCount
+		};
+		return Ok(response);
+	}
+
+	[HttpGet]
+	public IActionResult Index(string? id, string? createTime, uint? type, uint? layer, string? loggerNameTags,
+		string? moduleTags, string? contentTags)
+	{
+		var result = new List<LogRecord4Net>();
+		for (var i = 0; i < 10; i++)
+		{
+			var randomLog = MockLogGenerator.RandomLog();
+			result.Add(LogRecord4Net.FromLog(randomLog));
+		}
+		return Ok(new { data=result, success = true, total = 10000, message = $"你的查询参数是: id={id}, createTime={createTime}, type={type}, layer={layer}, loggerNameTags={loggerNameTags}, moduleTags={moduleTags}, contentTags={contentTags}"});
 	}
 }

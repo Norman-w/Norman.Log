@@ -64,7 +64,7 @@ public static class MockLogGenerator
 	}
         
 	//生成随机的日志
-	private static Model.Log RandomLog()
+	public static Model.Log RandomLog()
 	{
 		var log = new Model.Log(RandomString(5))
 		{

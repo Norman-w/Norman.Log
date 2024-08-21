@@ -26,8 +26,9 @@ namespace Norman.Log.Component.DatabaseReader
 		/// 获取日志
 		/// </summary>
 		/// <param name="query"></param>
+		/// <param name="totalResultCount"></param>
 		/// <returns></returns>
-		public static List<Component.Database.Mysql.Context.Log> GetLogsFromDb(LogQueryDatabaseArgs query)
+		public static List<Component.Database.Mysql.Context.Log> GetLogsFromDb(LogQueryDatabaseArgs query, out uint totalResultCount)
 		{
 			using (var db = new NormanLogDbContext())
 			{
@@ -67,6 +68,8 @@ namespace Norman.Log.Component.DatabaseReader
 
 				// 获取符合条件的记录总数
 				var totalRecords = orderedQueryable.Count();
+				
+				totalResultCount = (uint)totalRecords;
 
 				var result = new List<Component.Database.Mysql.Context.Log>();
 
