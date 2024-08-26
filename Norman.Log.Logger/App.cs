@@ -16,7 +16,7 @@ namespace Norman.Log.Logger
 	/// </summary>
 	public static class App
 	{
-		public static readonly LoggerConfig LoggerConfig = ConfigFactory.CreateConfig<LoggerConfig>("logger.json");
+		public static readonly LoggerConfig LoggerConfig = ConfigFactory.CreateFromFile<LoggerConfig>("logger.json", true);
 		private static LogFileWriter _logFileWriter;
 		/// <summary>
 		/// 日志文件写入器

@@ -7,7 +7,7 @@ namespace Norman.Log.Server;
 /// </summary>
 public static class App
 {
-	public static LoggerConfig LoggerConfig { get; } = ConfigFactory.CreateConfig<LoggerConfig>("logServer.config");
+	public static LoggerConfig LoggerConfig { get; } = ConfigFactory.CreateFromFile<LoggerConfig>("logServer.config", true);
 
 	/// <summary>
 	/// 应用程序的设置

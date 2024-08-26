@@ -274,12 +274,12 @@ namespace Norman.Log.Config
 	
 	public static class ConfigFactory
 	{
-		public static T CreateConfig<T>(string json) where T : ICommonConfig<T>
+		public static T CreateFromJson<T>(string json) where T : ICommonConfig<T>
 		{
 			return JsonConvert.DeserializeObject<T>(json);
 		}
 		
-		public static T CreateConfig<T>(string path, bool tryCreateIfNotExist) where T : ICommonConfig<T>, new()
+		public static T CreateFromFile<T>(string path, bool tryCreateIfNotExist) where T : ICommonConfig<T>, new()
 		{
 			if (!File.Exists(path))
 			{
