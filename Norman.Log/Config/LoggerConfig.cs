@@ -285,7 +285,7 @@ namespace Norman.Log.Config
 			{
 				if (tryCreateIfNotExist)
 				{
-					var defaultConfigJson = JsonConvert.SerializeObject(new T().Default, Formatting.Indented);
+					var defaultConfigJson = JsonConvert.SerializeObject(new T().GetDefault(), Formatting.Indented);
 					File.WriteAllText(path, defaultConfigJson);
 				}
 				else
@@ -345,9 +345,9 @@ namespace Norman.Log.Config
 		#endregion
 	}
 
-	public interface ICommonConfig<T>
+	public interface ICommonConfig<out T>
 	{
-		T Default { get; }
+		T GetDefault();
 		void Populate(string json);
 		void FromFile(string path, bool tryCreateIfNotExist = true);
 	}
@@ -357,16 +357,20 @@ namespace Norman.Log.Config
 	/// </summary>
 	public class LoggerConfig : CommonConfig, ICommonConfig<LoggerConfig>
 	{
-		public LoggerConfig Default { get; } = new LoggerConfig
+		private LoggerConfig _default;
+		public LoggerConfig GetDefault()
 		{
-			LogToFile = LogToFileConfig.Default,
-			LogToDatabase = LogToDatabaseConfig.Default,
-			LogToServer = LogToLogServerConfig.Default,
-		};
+			return _default??(_default = new LoggerConfig
+			{
+				LogToFile = LogToFileConfig.Default,
+				LogToDatabase = LogToDatabaseConfig.Default,
+				LogToServer = LogToLogServerConfig.Default,
+			});
+		}
 
 		public void FromFile(string path, bool tryCreateIfNotExist = true)
 		{
-			PopulateByFile(path, tryCreateIfNotExist, Default);
+			PopulateByFile(path, tryCreateIfNotExist, _default);
 		}
 
 		/// <summary>
@@ -380,14 +384,18 @@ namespace Norman.Log.Config
 	/// </summary>
 	public class LogServerConfig : CommonConfig, ICommonConfig<LogServerConfig>
 	{
-		public LogServerConfig Default { get; } = new LogServerConfig
+		private LogServerConfig _default;
+		public LogServerConfig GetDefault()
 		{
-			LogToFile = LogToFileConfig.Default,
-			LogToDatabase = LogToDatabaseConfig.Default,
-		};
+			return _default??(_default = new LogServerConfig
+			{
+				LogToFile = LogToFileConfig.Default,
+				LogToDatabase = LogToDatabaseConfig.Default,
+			});
+		}
 		public void FromFile(string path, bool tryCreateIfNotExist = true)
 		{
-			PopulateByFile(path, tryCreateIfNotExist, Default);
+			PopulateByFile(path, tryCreateIfNotExist, _default);
 		}
 	}
 }
