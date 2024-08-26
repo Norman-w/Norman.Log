@@ -77,7 +77,7 @@ namespace Norman.Log.Component.FileWriter
 		/// </summary>
 		public DateTime LastFileCreatedTime { get; private set; } = DateTime.MinValue;
 
-		private LoggerConfig.LogToFileConfig _config;
+		private LogToFileConfig _config;
 
 		#endregion
 
@@ -90,7 +90,7 @@ namespace Norman.Log.Component.FileWriter
 		/// </summary>
 		/// <param name="config"></param>
 		/// <exception cref="ArgumentException"></exception>
-		public LogFolderAndFileWatcher(LoggerConfig.LogToFileConfig config)
+		public LogFolderAndFileWatcher(LogToFileConfig config)
 		{
 			if (!UpdateConfig(config, out var errorMessage))
 			{
@@ -145,7 +145,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <param name="config"></param>
 		/// <param name="errorMessage"></param>
 		/// <returns></returns>
-		public bool UpdateConfig(LoggerConfig.LogToFileConfig config, out string errorMessage)
+		public bool UpdateConfig(LogToFileConfig config, out string errorMessage)
 		{
 			#region 验证配置的有效性,有效才更新,无效抛出异常
 

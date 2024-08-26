@@ -20,7 +20,7 @@ var startTime = DateTime.Now;
 
 #endregion
 
-Console.WriteLine($"日志将输出到路径:{AppConfig.LoggerConfig.LogToFile.RootPath}");
+Console.WriteLine($"日志将输出到路径:{App.LoggerConfig.LogToFile.RootPath}");
 
 //使用Grpc日志记录器
 var grpcNamedLogger = new GrpcNamedLogger("Default", "http://localhost:5011");

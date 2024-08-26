@@ -16,16 +16,17 @@ namespace Norman.Log.Logger
 	/// </summary>
 	public static class App
 	{
+		public static readonly LoggerConfig LoggerConfig = ConfigFactory.CreateConfig<LoggerConfig>("logger.json");
 		private static LogFileWriter _logFileWriter;
 		/// <summary>
 		/// 日志文件写入器
 		/// </summary>
-		public static LogFileWriter LogFileWriter => _logFileWriter??(_logFileWriter = new LogFileWriter(AppConfig.LoggerConfig.LogToFile));
+		public static LogFileWriter LogFileWriter => _logFileWriter??(_logFileWriter = new LogFileWriter(LoggerConfig.LogToFile));
 
 		private static LogDatabaseWriter _logDatabaseWriter;
 		/// <summary>
 		/// 日志数据库写入器
 		/// </summary>
-		public static LogDatabaseWriter LogDatabaseWriter => _logDatabaseWriter??(_logDatabaseWriter = new LogDatabaseWriter(AppConfig.LoggerConfig.LogToDatabase));
+		public static LogDatabaseWriter LogDatabaseWriter => _logDatabaseWriter??(_logDatabaseWriter = new LogDatabaseWriter(LoggerConfig.LogToDatabase));
 	}
 }

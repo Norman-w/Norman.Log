@@ -162,11 +162,13 @@ public class LogController : ControllerBase
 				logRecords.Add(LogRecord4Net.FromLog(randomLog));
 			}
 		}
+
+		totalResultCount = 1000;
 		#endregion
 		var response = new LogQueryResponse
 		{
 			Logs = logRecords,
-			TotalResultCount = totalResultCount
+			TotalResultCount = totalResultCount,
 		};
 		return Ok(response);
 	}

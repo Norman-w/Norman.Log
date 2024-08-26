@@ -16,7 +16,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <param name="folderName"></param>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		internal static void CalcLogFileAndFolderName(string loggerName, DateTime time,
-			LoggerConfig.LogToFileConfig config,
+			LogToFileConfig config,
 			out string fileName, out string folderName)
 		{
 			var yearString = time.Year.ToString();
@@ -26,27 +26,27 @@ namespace Norman.Log.Component.FileWriter
 			string timeOfFileString;
 			switch (config.CreateFolderRule)
 			{
-				case LoggerConfig.LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthFolderDayFolder:
+				case LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthFolderDayFolder:
 					folderName = Path.Combine(yearString, monthString, dayString);
 					timeOfFileString = time.Hour.ToString().PadLeft(2, '0');
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthDayFolder:
+				case LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthDayFolder:
 					folderName = Path.Combine(yearString, monthString + dayString);
 					timeOfFileString = time.Hour.ToString().PadLeft(2, '0');
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFolderRuleEnum.YearMonthFolderDayFolder:
+				case LogToFileConfig.CreateFolderRuleEnum.YearMonthFolderDayFolder:
 					folderName = Path.Combine(yearString + monthString, dayString);
 					timeOfFileString = time.Hour.ToString().PadLeft(2, '0');
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFolderRuleEnum.YearMonthDayFolder:
+				case LogToFileConfig.CreateFolderRuleEnum.YearMonthDayFolder:
 					folderName = Path.Combine(yearString + monthString + dayString);
 					timeOfFileString = time.Hour.ToString().PadLeft(2, '0');
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthFolder:
+				case LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthFolder:
 					folderName = Path.Combine(yearString, monthString);
 					timeOfFileString = dayString;
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthDay:
+				case LogToFileConfig.CreateFolderRuleEnum.YearFolderMonthDay:
 					folderName = Path.Combine(yearString, monthString + dayString);
 					timeOfFileString = time.Hour.ToString();
 					break;
@@ -56,17 +56,17 @@ namespace Norman.Log.Component.FileWriter
 
 			switch (config.CreateFileNameRule)
 			{
-				case LoggerConfig.LogToFileConfig.CreateFileNameRuleEnum.LoggerNameAndTime:
+				case LogToFileConfig.CreateFileNameRuleEnum.LoggerNameAndTime:
 					fileName =
 						$"{loggerName}_{timeOfFileString}.{Model.Constant.DefaultLogFileExtension}";
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFileNameRuleEnum.LoggerName:
+				case LogToFileConfig.CreateFileNameRuleEnum.LoggerName:
 					fileName = $"{loggerName}.{Model.Constant.DefaultLogFileExtension}";
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFileNameRuleEnum.Time:
+				case LogToFileConfig.CreateFileNameRuleEnum.Time:
 					fileName = $"{timeOfFileString}.{Model.Constant.DefaultLogFileExtension}";
 					break;
-				case LoggerConfig.LogToFileConfig.CreateFileNameRuleEnum.TimeAndLoggerName:
+				case LogToFileConfig.CreateFileNameRuleEnum.TimeAndLoggerName:
 					fileName =
 						$"{timeOfFileString}_{loggerName}.{Model.Constant.DefaultLogFileExtension}";
 					break;

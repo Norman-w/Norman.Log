@@ -45,9 +45,9 @@ namespace Norman.Log.Logger
 		/// <param name="log"></param>
 		public virtual void Write(Model.Log log)
 		{
-			if (AppConfig.LoggerConfig.LogToFile?.OnOff == true)
+			if (App.LoggerConfig.LogToFile?.OnOff == true)
 				App.LogFileWriter.AddLogToWaitingToWriteQueue(log);
-			if (AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)
+			if (App.LoggerConfig.LogToDatabase?.OnOff == true)
 				App.LogDatabaseWriter.AddLogToWaitingToWriteQueue(log);
 			// //TODO 添加推送到日志服务器等的代码
 			// if(AppConfig.LoggerConfig.LogToDatabase?.OnOff == true)

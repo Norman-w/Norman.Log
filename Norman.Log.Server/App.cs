@@ -1,3 +1,5 @@
+using Norman.Log.Config;
+
 namespace Norman.Log.Server;
 
 /// <summary>
@@ -5,6 +7,8 @@ namespace Norman.Log.Server;
 /// </summary>
 public static class App
 {
+	public static LoggerConfig LoggerConfig { get; } = ConfigFactory.CreateConfig<LoggerConfig>("logServer.config");
+
 	/// <summary>
 	/// 应用程序的设置
 	/// </summary>

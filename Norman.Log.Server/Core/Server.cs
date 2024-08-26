@@ -6,6 +6,9 @@
 
 */
 
+using Norman.Log.Component.DatabaseWriter;
+using Norman.Log.Component.FileWriter;
+
 namespace Norman.Log.Server.Core;
 
 public class Server
@@ -26,6 +29,14 @@ public class Server
     //接收者列表
     private readonly List<ReceiverClient> _receiverClients = new();
 
+    private readonly LogFileWriter? _logFileWriter = 
+        App.LoggerConfig.LogToFile.OnOff ?
+        new LogFileWriter(App.LoggerConfig.LogToFile) : null;
+    
+    private readonly LogDatabaseWriter? _logDatabaseWriter = 
+        App.LoggerConfig.LogToDatabase.OnOff ?
+        new LogDatabaseWriter(App.LoggerConfig.LogToDatabase) : null;
+
     /// <summary>
     /// 处理日志,当从网络/命名管道/内部调用的方式收到日志时,调用此函数
     /// </summary>
@@ -33,6 +44,8 @@ public class Server
     /// <param name="logEntry"></param>
     public void HandleLog(object sender, Log.Model.Log logEntry)
     {
+        _logFileWriter?.AddLogToWaitingToWriteQueue(logEntry);
+        _logDatabaseWriter?.AddLogToWaitingToWriteQueue(logEntry);
         var client = sender as ReporterClient;
         if (client == null)
         {

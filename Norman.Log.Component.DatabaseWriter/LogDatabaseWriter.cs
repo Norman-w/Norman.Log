@@ -83,7 +83,7 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// <summary>
 		/// 写入数据库的配置
 		/// </summary>
-		private LoggerConfig.LogToDatabaseConfig _config;
+		private LogToDatabaseConfig _config;
 
 		#endregion
 
@@ -94,7 +94,7 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// </summary>
 		/// <param name="config"></param>
 		/// <exception cref="InvalidDataException"></exception>
-		public LogDatabaseWriter(LoggerConfig.LogToDatabaseConfig config)
+		public LogDatabaseWriter(LogToDatabaseConfig config)
 		{
 			if (!UpdateConfig(config, out var errorMessage))
 			{
@@ -131,7 +131,7 @@ namespace Norman.Log.Component.DatabaseWriter
 		/// <param name="config"></param>
 		/// <param name="errorMessage"></param>
 		/// <returns></returns>
-		public bool UpdateConfig(LoggerConfig.LogToDatabaseConfig config, out string errorMessage)
+		public bool UpdateConfig(LogToDatabaseConfig config, out string errorMessage)
 		{
 			#region 验证配置的有效性,有效才更新,无效抛出异常
 

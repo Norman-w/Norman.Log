@@ -24,6 +24,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Norman.Log.Component.DatabaseReader\Norman.Log.Component.DatabaseReader.csproj" />
+      <ProjectReference Include="..\Norman.Log.Component.DatabaseWriter\Norman.Log.Component.DatabaseWriter.csproj" />
+      <ProjectReference Include="..\Norman.Log.Component.FileWriter\Norman.Log.Component.FileWriter.csproj" />
       <ProjectReference Include="..\Norman.Log\Norman.Log.csproj" />
     </ItemGroup>
 

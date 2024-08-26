@@ -185,7 +185,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <param name="config"></param>
 		/// <param name="createRootPathIfNotExist"></param>
 		/// <exception cref="ArgumentException"></exception>
-		public LogFileWriter(LoggerConfig.LogToFileConfig config, bool createRootPathIfNotExist = true)
+		public LogFileWriter(LogToFileConfig config, bool createRootPathIfNotExist = true)
 		{
 			if (!UpdateConfig(config, out var errorMessage, createRootPathIfNotExist))
 			{
@@ -273,7 +273,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <param name="errorMessage"></param>
 		/// <param name="createRootPathIfNotExist"></param>
 		/// <returns></returns>
-		public bool UpdateConfig(LoggerConfig.LogToFileConfig config, out string errorMessage,
+		public bool UpdateConfig(LogToFileConfig config, out string errorMessage,
 			bool createRootPathIfNotExist = false)
 		{
 			#region 验证配置的有效性,有效才更新,无效抛出异常
@@ -321,7 +321,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <summary>
 		/// 文件写入配置文件
 		/// </summary>
-		private LoggerConfig.LogToFileConfig _config;
+		private LogToFileConfig _config;
 
 		/// <summary>
 		/// 定时器,用于定时检查缓冲中的日志是否需要写入文件

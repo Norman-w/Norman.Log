@@ -1,3 +1,4 @@
+using Norman.Log.Config;
 using Norman.Log.Server.Core;
 
 namespace Norman.Log.Server;
