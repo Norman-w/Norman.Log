@@ -75,11 +75,11 @@ namespace Norman.Log.Logger.HTTP
 		/// 记录/写日志,传入Log对象
 		/// </summary>
 		/// <param name="log"></param>
-		public static void Write(Log log)
+		public static bool Write(Log log)
 		{
 			try
 			{
-				StaticDefaultLoggerInstance.Write(log);
+				return StaticDefaultLoggerInstance.Write(log);
 			}
 			catch (Exception e)
 			{
@@ -90,6 +90,8 @@ namespace Norman.Log.Logger.HTTP
 				Console.WriteLine(message);
 				Console.ResetColor();
 			}
+
+			return false;
 		}
 		/// <summary>
 		/// 记录/写日志,传入参数,生成Log对象,最终会调用Write(Log log)方法
@@ -100,17 +102,18 @@ namespace Norman.Log.Logger.HTTP
 		/// <param name="summary">摘要</param>
 		/// <param name="detail">详情</param>
 		/// <param name="context">上下文</param>
-		public static void Write(LogTypeEnum logType, LogLayerEnum logLayer, string moduleName, string summary, string detail,
-			Log.Context context = null)
+		public static bool Write(LogTypeEnum logType, LogLayerEnum logLayer, string moduleName, string summary, string detail,
+			LogContext context = null)
 		{
-			Write(new Log(_loggerName)
+			return Write(new Log(_loggerName)
 			{
 				Type = logType,
 				Layer = logLayer,
 				Summary = summary,
 				Detail = detail,
 				Module = moduleName,
-				LogContext = context
+				Context = context,
+				CreateTime = DateTime.Now
 			});
 		}
 

@@ -3,10 +3,10 @@
   &lt;Assembly Path="/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/2.0-api/System.Web.Http.dll" /&gt;
   &lt;Assembly Path="/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/2.0-api/System.Net.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">/usr/local/share/dotnet/sdk/7.0.400/MSBuild.dll</s:String>
+	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/msbuild/15.0/bin/MSBuild.dll</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/DotNetCliExePath/@EntryValue">/usr/local/share/dotnet/dotnet</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MonoExePath/@EntryValue">/Library/Frameworks/Mono.framework/Versions/6.12.0/bin/mono-sgen64</s:String>
-	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">1114112</s:Int64>
+	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">983040</s:Int64>
 	
 	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=28b3423d_002D0eac_002D40d0_002Db388_002D470171a5a1aa_0023Norman_002ELog_002EComponent_002EDatabase_002EMysql_005FNet7Example/@EntryIndexedValue">True</s:Boolean>
 	</wpf:ResourceDictionary>

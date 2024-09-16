@@ -5,12 +5,14 @@ namespace Norman.Log.Logger.HTTP
 {
 	public class LogRecord4Net
 	{ 
+		public string Id { get; set; }
 		public string LoggerName { get; set; }
 		public LogTypeEnum Type { get; set; }
 		public LogLayerEnum Layer { get; set; }
 		public string Summary { get; set; }
 		public string Detail { get; set; }
 		public string Module { get; set; }
+		public string CreateTime { get; set; }
 		public LogRecordContext4Net LogContext { get; set; }
 		
 		public string ToJson()

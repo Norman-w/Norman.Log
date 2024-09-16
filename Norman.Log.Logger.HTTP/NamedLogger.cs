@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Text;
 
 namespace Norman.Log.Logger.HTTP
 {
@@ -22,14 +23,36 @@ namespace Norman.Log.Logger.HTTP
 		/// 记录/写日志,传入Log对象
 		/// </summary>
 		/// <param name="log"></param>
-		public virtual void Write(Log log)
+		public virtual bool Write(Log log)
 		{
 			var logRecord4Net = log.ToLogRecord4Net();
 			var client = new WebClient();
 			client.Headers.Add("Content-Type", "application/json");
 			var json = logRecord4Net.ToJson();
 			var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
-			client.UploadData(_reportLogUrl, "POST", jsonBytes);
+			try
+			{
+				var uploadDataReturnByte = client.UploadData(_reportLogUrl, "POST", jsonBytes);
+				var uploadDataReturnString = Encoding.UTF8.GetString(uploadDataReturnByte);
+				// Console.WriteLine($"写日志成功,返回信息:{uploadDataReturnString}");
+				return true;
+			}
+			catch (Exception e)
+			{
+				var isError500 = e.Message.Contains("(500)");
+				if (isError500)
+				{
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine($"写日志失败,服务器端错误,信息:{e.Message}");
+					Console.ResetColor();
+				}
+				else
+				{
+					Console.WriteLine($"写日志失败,错误信息:{e.Message}");
+				}
+			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -41,8 +64,8 @@ namespace Norman.Log.Logger.HTTP
 		/// <param name="summary"></param>
 		/// <param name="detail"></param>
 		/// <param name="context"></param>
-		public void Write(LogTypeEnum logType, LogLayerEnum logLayer, string moduleName, string summary, string detail,
-			Log.Context context = null)
+		public bool Write(LogTypeEnum logType, LogLayerEnum logLayer, string moduleName, string summary, string detail,
+			LogContext context = null)
 		{
 			var log = new Log(Name)
 			{
@@ -51,9 +74,9 @@ namespace Norman.Log.Logger.HTTP
 				Summary = summary,
 				Detail = detail,
 				Module = moduleName,
-				LogContext = context
+				Context = context
 			};
-			Write(log);
+			return Write(log);
 		}
 
 		public void Dispose()
