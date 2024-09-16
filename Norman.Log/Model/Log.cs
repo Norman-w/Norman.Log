@@ -122,6 +122,15 @@ namespace Norman.Log.Model
 			{
 				throw new ArgumentNullException(nameof(logRecord4Net));
 			}
+			try
+			{
+				logRecord4Net.Validate();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 
 			var context = new Context();
 			var contextJsonFromLogRecord4Net = logRecord4Net.LogContext == null? "": JsonConvert.SerializeObject(logRecord4Net.LogContext);

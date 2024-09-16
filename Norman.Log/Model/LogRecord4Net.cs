@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Norman.Log.Model
@@ -55,6 +56,27 @@ namespace Norman.Log.Model
 		public string ToJson()
 		{
 			return JsonConvert.SerializeObject(this);
+		}
+
+		public void Validate()
+		{
+			if (string.IsNullOrWhiteSpace(LoggerName))
+			{
+				throw new ArgumentNullException($"{nameof(LoggerName)} 不可为空");
+			}
+			if (string.IsNullOrWhiteSpace(Module))
+			{
+				throw new ArgumentNullException($"{nameof(Module)} 不可为空");
+			}
+			if (string.IsNullOrWhiteSpace(Summary))
+			{
+				throw new ArgumentNullException($"{nameof(Summary)} 不可为空");
+			}
+
+			if (DateTime.TryParse(CreateTime, out _) == false)
+			{
+				throw new ArgumentException($"{nameof(CreateTime)} 无效, 请使用正确的时间格式, 当前内容: {CreateTime}");
+			}
 		}
 	}
 }
