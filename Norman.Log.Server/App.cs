@@ -11,12 +11,13 @@ public static class App
 	{
 		LoggerConfig = ConfigFactory.CreateFromFile<LoggerConfig>("LoggerConfig.config", true);
 		Setting = ConfigFactory.CreateFromFile<Setting>("Setting.config", true);
+		Server = new Core.Server();
 	}
 
 	/// <summary>
 	///     core server的实例
 	/// </summary>
-	internal static readonly Core.Server Server = new();
+	internal static readonly Core.Server Server;
 
 
 	#region 全局配置
