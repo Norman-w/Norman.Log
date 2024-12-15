@@ -197,6 +197,13 @@ public class Net
 		#region swagger
 
 		//新增 Swagger 配置，支持通过请求头动态设置服务器 URL,解决swagger部署到nginx等服务器之后时,swagger ui中的api try it out路径不正确的问题
+		/*
+		 比如
+		 https://norman.wang/logUploadEndpoint/grpc/swagger/index.html可以正常使用
+		 https://norman.wang/logUploadEndpoint/grpc/log直接使用也可以正常使用(log是api名)
+		 在swagger/index.html中的Log api的try it out测试时,如果不这么配置,会错误的分配url为https://norman.wang/log,导致无法访问
+		 
+        */
 		app.UseSwagger(options =>
 		{
 			options.PreSerializeFilters.Add((swagger, httpReq) =>
