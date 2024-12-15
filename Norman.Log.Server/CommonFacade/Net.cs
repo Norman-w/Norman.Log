@@ -193,6 +193,17 @@ public class Net
 		#region swagger
 
 		app.UseSwagger();
+		
+		/*
+		 在https://norman.wang/logUploadEndpoint/grpc/swagger/index.html中, 尝试请求Log这个api的时候,会出现错误
+		 错误的解析成了Request URL
+		   https://norman.wang/Log
+		 而不是 https://norman.wang/logUploadEndpoint/grpc/Log
+        
+        */
+		//获取当前子路径, 如,将会获取到/logUploadEndpoint/grpc,然后usePathBase
+		var pathBase = app.Environment.WebRootPath;
+		app.UsePathBase(pathBase);
 
 		app.UseSwaggerUI();
 
