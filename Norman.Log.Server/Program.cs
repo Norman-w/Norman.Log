@@ -92,9 +92,17 @@ var userInputTask = Task.Run(() =>
 
 #endregion
 
-await Task.WhenAny(
-	mockLogGenerateTask,
-	userInputTask
-);
+//如果启用了随机日志生成器,则等待任一任务完成
+if (App.Setting.EnableRandomLogGenerator)
+{
+	await Task.WhenAny(
+		mockLogGenerateTask,
+		userInputTask
+	);
+}
+else//否则只等待用户输入
+{
+	await userInputTask;
+}
 
 Console.WriteLine("正在退出...");
