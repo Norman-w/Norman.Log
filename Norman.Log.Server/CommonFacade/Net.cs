@@ -325,7 +325,7 @@ public class Net
 				//使用grpc客户端时,如果Kestrel同时支持Http1和Http2的时候,无法正常连接.所以开两个端口用于不同的链接
 				listenOptions.Protocols = HttpProtocols.Http2;
 			});
-			options.ListenAnyIP(App.Setting.GrpcWebPort, listenOptions =>
+			options.ListenAnyIP(App.Setting.HttpAndWsAndGrpcWebPort, listenOptions =>
 			{
 				//Grpc Web需要使用Http1
 				listenOptions.Protocols = HttpProtocols.Http1;

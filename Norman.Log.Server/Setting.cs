@@ -15,9 +15,9 @@ internal class Setting : ICommonConfig<Setting>
 	public int GrpcPort { get; set; }
 
 	/// <summary>
-	/// 通过grpc-web接收日志的端口
+	/// 通过grpc-web,http,websocket接收日志的端口
 	/// </summary>
-	public int GrpcWebPort { get; set; }
+	public int HttpAndWsAndGrpcWebPort { get; set; }
 
 	/// <summary>
 	/// 控制面板设置
@@ -38,7 +38,7 @@ internal class Setting : ICommonConfig<Setting>
 		return new Setting
 		{
 			GrpcPort = 5011,
-			GrpcWebPort = 5012,
+			HttpAndWsAndGrpcWebPort = 5012,
 			ControlPanel = new ControlPanelSetting
 			{
 				Port = 8080,
