@@ -3,7 +3,7 @@
  网络入口,日志的进入可以从这里来
  也可以客户端或者监视器之类的连接上以后,通过这里来获取日志
  或者服务端调用客户端推送日志.
- 
+
  所有经由网络的请求都从这里出去或者进来,然后交给对应的组件处理.
 
 */
@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Norman.Log.Server.CommonFacade.GRPC;
 using Norman.Log.Server.Core;
 using ProtoBuf.Grpc.Reflection;
@@ -46,14 +47,15 @@ public class SessionCreatedEventArgs : EventArgs
 				{
 					throw new Exception("ClientType Header的值不是唯一的");
 				}
+
 				var clientTypeHeaderValue = clientTypeHeaderValues[0];
 				ClientType = clientTypeHeaderValue == null
 					? ClientTypeEnum.Unknown
 					: Enum.Parse<ClientTypeEnum>(clientTypeHeaderValue);
 				break;
 			// case Grpc.AspNetCore.Server.ServerCallContext _:
-				// ConnectionType = ConnectionTypeEnum.Grpc;
-				// break;
+			// ConnectionType = ConnectionTypeEnum.Grpc;
+			// break;
 			case WebSocket webSocket:
 				ConnectionType = ConnectionTypeEnum.WebSocket;
 				ClientType = webSocket.SubProtocol == null
@@ -70,15 +72,17 @@ public class SessionCreatedEventArgs : EventArgs
 	/// 会话ID,连接的时候生成的guid(或者是其他的唯一标识,不一定是哪一端生成)
 	/// </summary>
 	public string SessionId { get; }
+
 	/// <summary>
 	/// 连接类型枚举
 	/// </summary>
 	public ConnectionTypeEnum ConnectionType { get; set; }
+
 	/// <summary>
 	/// 连接对象
 	/// </summary>
 	public object Connection { get; set; }
-	
+
 	/// <summary>
 	/// 客户端类型
 	/// </summary>
@@ -192,19 +196,20 @@ public class Net
 	{
 		#region swagger
 
-		app.UseSwagger();
+		//新增 Swagger 配置，支持通过请求头动态设置服务器 URL,解决swagger部署到nginx等服务器之后时,swagger ui中的api try it out路径不正确的问题
+		app.UseSwagger(options =>
+		{
+			options.PreSerializeFilters.Add((swagger, httpReq) =>
+			{
+				if (!httpReq.Headers.ContainsKey("X-Request-Uri")) return;
+				var index = httpReq.Headers["X-Request-Uri"].ToString()
+					.IndexOf("/swagger/", StringComparison.Ordinal);
+				if (index <= 0) return;
+				var serverUrl = $"{httpReq.Headers["X-Request-Uri"].ToString()[..index]}/";
+				swagger.Servers = new List<OpenApiServer> { new() { Url = serverUrl } };
+			});
+		});
 		
-		/*
-		 在https://norman.wang/logUploadEndpoint/grpc/swagger/index.html中, 尝试请求Log这个api的时候,会出现错误
-		 错误的解析成了Request URL
-		   https://norman.wang/Log
-		 而不是 https://norman.wang/logUploadEndpoint/grpc/Log
-        
-        */
-		//获取当前子路径, 如,将会获取到/logUploadEndpoint/grpc,然后usePathBase
-		var pathBase = app.Environment.WebRootPath;
-		app.UsePathBase(pathBase);
-
 		app.UseSwaggerUI();
 
 		app.UseHttpsRedirection();
@@ -409,6 +414,7 @@ public class Net
 		//写入proto文件的内容
 		File.WriteAllText(protoFilePath, schema);
 	}
+
 	/// <summary>
 	/// 异步会话创建事件,当新的会话创建时触发,并等待事件处理完成
 	/// </summary>
