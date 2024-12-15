@@ -7,16 +7,17 @@ namespace Norman.Log.Server;
 /// </summary>
 public static class App
 {
-	/// <summary>
-	///     core server的实例
-	/// </summary>
-	internal static readonly Core.Server Server = new();
-
 	static App()
 	{
 		LoggerConfig = ConfigFactory.CreateFromFile<LoggerConfig>("LoggerConfig.config", true);
 		Setting = ConfigFactory.CreateFromFile<Setting>("Setting.config", true);
 	}
+
+	/// <summary>
+	///     core server的实例
+	/// </summary>
+	internal static readonly Core.Server Server = new();
+
 
 	#region 全局配置
 
