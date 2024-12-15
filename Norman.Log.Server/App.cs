@@ -12,37 +12,29 @@ public static class App
 	/// </summary>
 	internal static readonly Core.Server Server = new();
 
+	static App()
+	{
+		LoggerConfig = ConfigFactory.CreateFromFile<LoggerConfig>("LoggerConfig.config", true);
+		Setting = ConfigFactory.CreateFromFile<Setting>("Setting.config", true);
+	}
+
 	#region 全局配置
 
 	#region LoggerConfig
 
-	private static LoggerConfig? _loggerConfig;
-
-	private static LoggerConfig LoadLoggerConfig()
-	{
-		return ConfigFactory.CreateFromFile<LoggerConfig>("LoggerConfig.config", true);
-	}
-
 	/// <summary>
 	///     日志记录器设置
 	/// </summary>
-	public static LoggerConfig LoggerConfig { get; } = _loggerConfig ??= LoadLoggerConfig();
+	public static LoggerConfig LoggerConfig { get; }
 
 	#endregion
 
 	#region Setting
 
-	private static Setting? _setting;
-
-	private static Setting LoadSetting()
-	{
-		return ConfigFactory.CreateFromFile<Setting>("Setting.config", true);
-	}
-
 	/// <summary>
 	///    应用程序主设置,也就是Server的设置
 	/// </summary>
-	internal static Setting Setting { get; } = _setting ??= LoadSetting();
+	internal static Setting Setting { get; }
 
 	#endregion
 
