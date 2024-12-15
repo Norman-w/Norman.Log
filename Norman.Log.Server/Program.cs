@@ -6,6 +6,7 @@ using Norman.Log.Server;
 using Norman.Log.Server.CommonFacade;
 using Norman.Log.Server.Core;
 
+
 //创建一个Norman.Log.Server.CommonFacade.Net实例,并启动
 Net netFacadeServer = new();
 netFacadeServer.Start();
