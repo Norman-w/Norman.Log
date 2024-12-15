@@ -10,6 +10,10 @@ namespace Norman.Log.Server;
 internal class Setting : ICommonConfig<Setting>
 {
 	/// <summary>
+	/// 是否开启随机日志生成器,用于测试,会生成大量的随机日志数据
+	/// </summary>
+	public bool EnableRandomLogGenerator { get; set; }
+	/// <summary>
 	/// 通过grpc接收日志的端口
 	/// </summary>
 	public int GrpcPort { get; set; }
