@@ -239,12 +239,12 @@ public class Net
 				KeepAliveInterval = TimeSpan.FromSeconds(120),
 			});
 		// 添加WebSocket中间件
-		app.Map("/ws", async (context) =>
+		app.Map("/websocket", async (context) =>
 		{
 			if (context.WebSockets.IsWebSocketRequest)
 			{
 				//如果访问位置是CampLauncher等支持的,则添加SubProtocol
-				if (context.Request.Path == "/ws/")
+				if (context.Request.Path == "/websocket/")
 				{
 					// var subProtocol = context.Request.Headers["Sec-WebSocket-Protocol"];
 					// if (subProtocol.Count > 0)
