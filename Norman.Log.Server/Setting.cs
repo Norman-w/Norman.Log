@@ -42,7 +42,7 @@ internal class Setting : ICommonConfig<Setting>
 		return new Setting
 		{
 			GrpcPort = 5011,
-			HttpAndWsAndGrpcWebPort = 5012,
+			HttpAndWsAndGrpcWebPort = 10007,
 			ControlPanel = new ControlPanelSetting
 			{
 				Port = 8080,
