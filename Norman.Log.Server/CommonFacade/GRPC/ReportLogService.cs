@@ -78,8 +78,7 @@ public class ReportLogService : IReportLogService
 		Console.WriteLine($"收到来自{context.ServerCallContext}的日志: {request}");
 		var log = Log4GrpcExtension.ToLog(request);
 		//TODO: 通过grpc上报日志时,根据CallContext的ServerCallContext信息来获取Reporter Client
-		var mockupGrpcReporter = new ReporterClient(new SessionCreatedEventArgs("mockup grpc reporter client", new object()));
-		App.Server.HandleLog(mockupGrpcReporter, log);
+		App.Server.HandleLog(null, log);
 		return Task.FromResult(new ReportLogByGrpcResponse
 		{
 			Success = true

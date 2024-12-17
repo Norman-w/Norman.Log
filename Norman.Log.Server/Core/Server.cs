@@ -40,18 +40,12 @@ public class Server
     /// <summary>
     /// 处理日志,当从网络/命名管道/内部调用的方式收到日志时,调用此函数
     /// </summary>
-    /// <param name="sender"></param>
+    /// <param name="reporter"></param>
     /// <param name="logEntry"></param>
-    public void HandleLog(object sender, Log.Model.Log logEntry)
+    public void HandleLog(ReporterClient? reporter, Log.Model.Log logEntry)
     {
         _logFileWriter?.AddLogToWaitingToWriteQueue(logEntry);
         _logDatabaseWriter?.AddLogToWaitingToWriteQueue(logEntry);
-        var client = sender as ReporterClient;
-        if (client == null)
-        {
-            Console.WriteLine("Invalid sender");
-            return;
-        }
         //发送给所有的接收者
         lock (_receiverClientsLocker)
         {

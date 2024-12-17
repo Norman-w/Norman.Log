@@ -32,7 +32,7 @@ netFacadeServer.SessionCreatedAsync += async session =>
 		case ClientTypeEnum.Reporter:
 		{
 			var client = ReporterClient.FromSession(session);
-			client.LogReceived += App.Server.HandleLog;
+			client.NewLog += App.Server.HandleLog;
 			client.ClientDisconnected += (c) =>
 			{
 				Console.WriteLine($"报告者客户端断开连接: {c}");

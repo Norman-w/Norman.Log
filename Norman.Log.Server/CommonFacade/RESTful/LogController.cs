@@ -231,8 +231,20 @@ public partial class LogController
 	[HttpPost("Report")]
 	public IActionResult Report(LogRecord4Net logRecord4Net)
 	{
-		var log = Model.Log.FromLogRecord4Net(logRecord4Net);
-		App.Server.HandleLog(this,log);
+		Model.Log? log = null;
+		try
+		{
+			log = Model.Log.FromLogRecord4Net(logRecord4Net);
+		}
+		catch (Exception e)
+		{
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine("收到了一个无效的日志数据:");
+			Console.WriteLine(e);
+			Console.ResetColor();
+		}
+		if (log == null) return BadRequest("无效的日志数据");
+		App.Server.HandleLog(null,log);
 		//如果他的请求结果说是要返回json(header里面设置的),那么给它返回json
 		var needJsonResponse = Request.Headers["Accept"].Contains("application/json");
 		if (!needJsonResponse) return Ok();
