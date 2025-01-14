@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Norman.Log.Model
+namespace Norman.Log.Model.Business
 {
 	/// <summary>
 	/// 日志

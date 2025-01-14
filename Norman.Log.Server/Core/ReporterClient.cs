@@ -95,7 +95,7 @@ public class ReporterClient : IClient
 			}
 			try
 			{
-				var log = Log.Model.Log.FromLogRecord4Net(logRecord4Net);
+				var log = Log.Model.Business.Log.FromLogRecord4Net(logRecord4Net);
 				NewLog?.Invoke(this, log);
 			}
 			catch (Exception e)
@@ -108,6 +108,6 @@ public class ReporterClient : IClient
 			Console.WriteLine($"解析日志失败:{e}");
 		}
 	}
-	public delegate void NewLogEventHandler(ReporterClient sender, Log.Model.Log log);
+	public delegate void NewLogEventHandler(ReporterClient sender, Log.Model.Business.Log log);
 	public event NewLogEventHandler? NewLog;
 }

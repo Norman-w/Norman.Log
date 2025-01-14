@@ -10,6 +10,8 @@
 using Norman.Log.Model;
 using Norman.Log.Server.CommonFacade;
 using Norman.Log.Server.Core;
+using LogLayer = Norman.Log.Model.Business.LogLayer;
+using LogType = Norman.Log.Model.Business.LogType;
 
 namespace Norman.Log.Server;
 
@@ -64,9 +66,9 @@ public static class MockLogGenerator
 	}
         
 	//生成随机的日志
-	public static Model.Log RandomLog()
+	public static Model.Business.Log RandomLog()
 	{
-		var log = new Model.Log(RandomString(5))
+		var log = new Model.Business.Log(RandomString(5))
 		{
 			Summary = RandomString(10),
 			Detail = RandomString(200),

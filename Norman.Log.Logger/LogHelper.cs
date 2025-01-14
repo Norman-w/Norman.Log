@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Norman.Log.Model;
+using LogLayer = Norman.Log.Model.Business.LogLayer;
+using LogType = Norman.Log.Model.Business.LogType;
 
 namespace Norman.Log.Logger
 {
@@ -25,7 +27,7 @@ namespace Norman.Log.Logger
 		/// 使用默认的日志记录器记录日志
 		/// </summary>
 		/// <param name="log"></param>
-		public static void Write(Model.Log log)
+		public static void Write(Model.Business.Log log)
 		{
 			DefaultNamedLogger.Write(log);
 		}
@@ -40,7 +42,7 @@ namespace Norman.Log.Logger
 		/// <param name="detail"></param>
 		/// <param name="context"></param>
 		public static void Write(LogType logType, LogLayer logLayer, string moduleName, string summary, string detail,
-			Model.Log.Context context = null)
+			Model.Business.Log.Context context = null)
 			=> DefaultNamedLogger.Write(logType, logLayer, moduleName, summary, detail, context);
 		
 		/// <summary>
@@ -82,7 +84,7 @@ namespace Norman.Log.Logger
 				"Default",
 				message,
 				"日志的详细描述内容",
-				new Model.Log.Context
+				new Model.Business.Log.Context
 				{
 					Others = new object[] { args }.ToList()
 				});

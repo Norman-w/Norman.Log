@@ -1,9 +1,12 @@
 using Newtonsoft.Json;
 using Norman.Log.Model;
+using Norman.Log.Model.Business;
 using Norman.Log.Server.CommonFacade.GRPC.Model;
 using Norman.Log.Server.Core;
 using Norman.Log.Server.Input;
 using ProtoBuf.Grpc;
+using LogLayer = Norman.Log.Model.Business.LogLayer;
+using LogType = Norman.Log.Model.Business.LogType;
 
 namespace Norman.Log.Server.CommonFacade.GRPC;
 
@@ -16,7 +19,7 @@ public class ReportLogService : IReportLogService
 		/// </summary>
 		/// <param name="request"></param>
 		/// <returns></returns>
-		public static Log.Model.Log ToLog(ReportLogByGrpcRequest request)
+		public static Log.Model.Business.Log ToLog(ReportLogByGrpcRequest request)
 		{
 			var createTime = Constant.GreenwichTime1970.AddMilliseconds(request.CreateTime);
 			var logType = LogType.FromValue((uint)request.Type);
@@ -26,19 +29,19 @@ public class ReportLogService : IReportLogService
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 			var id = request.Id == null? Guid.NewGuid(): Guid.Parse(request.Id);
 			
-			return new Log.Model.Log(request.LoggerName)
+			return new Log.Model.Business.Log(request.LoggerName)
 			{
 				CreateTime = createTime, Id = id, Summary = request.Summary,
 				Detail = request.Detail, Type = logType, Layer = logLayer, Module = request.Module, LogContext = logContext
 			};
 		}
 
-		private static Log.Model.Log.Context? ToContext(LogContext grpcLogContext)
+		private static Log.Model.Business.Log.Context? ToContext(LogContext grpcLogContext)
 		{
 			//确实有可能是空的
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 			if(grpcLogContext == null) return null;
-			var logContextBll = new Log.Model.Log.Context();
+			var logContextBll = new Log.Model.Business.Log.Context();
 			if (grpcLogContext.Role != null)
 			{
 				logContextBll.Role = JsonConvert.DeserializeObject(grpcLogContext.Role);

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Norman.Log.Config;
+using Norman.Log.Model.Business;
 
 namespace Norman.Log.Component.FileWriter
 {
@@ -58,17 +59,17 @@ namespace Norman.Log.Component.FileWriter
 			{
 				case LogToFileConfig.CreateFileNameRuleEnum.LoggerNameAndTime:
 					fileName =
-						$"{loggerName}_{timeOfFileString}.{Model.Constant.DefaultLogFileExtension}";
+						$"{loggerName}_{timeOfFileString}.{Constant.DefaultLogFileExtension}";
 					break;
 				case LogToFileConfig.CreateFileNameRuleEnum.LoggerName:
-					fileName = $"{loggerName}.{Model.Constant.DefaultLogFileExtension}";
+					fileName = $"{loggerName}.{Constant.DefaultLogFileExtension}";
 					break;
 				case LogToFileConfig.CreateFileNameRuleEnum.Time:
-					fileName = $"{timeOfFileString}.{Model.Constant.DefaultLogFileExtension}";
+					fileName = $"{timeOfFileString}.{Constant.DefaultLogFileExtension}";
 					break;
 				case LogToFileConfig.CreateFileNameRuleEnum.TimeAndLoggerName:
 					fileName =
-						$"{timeOfFileString}_{loggerName}.{Model.Constant.DefaultLogFileExtension}";
+						$"{timeOfFileString}_{loggerName}.{Constant.DefaultLogFileExtension}";
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();

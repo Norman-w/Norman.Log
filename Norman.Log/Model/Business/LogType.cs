@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Norman.Log.Model
+namespace Norman.Log.Model.Business
 {
 	public partial class LogType
 	{

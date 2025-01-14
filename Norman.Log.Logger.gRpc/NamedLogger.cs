@@ -40,7 +40,7 @@ namespace Norman.Log.Logger.gRpc
 			_client = new ReportLogService.ReportLogServiceClient(channel);
 		}
 
-		public override void Write(Model.Log log)
+		public override void Write(Model.Business.Log log)
 		{
 			base.Write(log);
 			//在父类完成了日志记录后，再将日志通过grpc传输到远程服务器

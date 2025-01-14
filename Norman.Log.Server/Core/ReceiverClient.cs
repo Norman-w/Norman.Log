@@ -106,7 +106,7 @@ public class ReceiverClient :IClient
 	/// </summary>
 	/// <param name="log"></param>
 	/// <exception cref="ArgumentNullException"></exception>
-	public async Task Send(Log.Model.Log log)
+	public async Task Send(Log.Model.Business.Log log)
 	{
 		var message = LogRecord4Net.FromLog(log).ToJson();
 		await Send(message);

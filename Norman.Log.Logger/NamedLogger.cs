@@ -24,13 +24,15 @@
 using System;
 using Norman.Log.Config;
 using Norman.Log.Model;
+using LogLayer = Norman.Log.Model.Business.LogLayer;
+using LogType = Norman.Log.Model.Business.LogType;
 
 namespace Norman.Log.Logger
 {
 	/// <summary>
 	/// 命名的Logger,用于区分不同的日志记录器
 	/// </summary>
-	public class NamedLogger : IDisposable, IReporter
+	public class NamedLogger : IDisposable
 	{
 		public string Name { get; }
 
@@ -43,7 +45,7 @@ namespace Norman.Log.Logger
 		/// 记录/写日志,传入Log对象
 		/// </summary>
 		/// <param name="log"></param>
-		public virtual void Write(Model.Log log)
+		public virtual void Write(Model.Business.Log log)
 		{
 			if (App.LoggerConfig.LogToFile?.OnOff == true)
 				App.LogFileWriter.AddLogToWaitingToWriteQueue(log);
@@ -64,9 +66,9 @@ namespace Norman.Log.Logger
 		/// <param name="detail"></param>
 		/// <param name="context"></param>
 		public void Write(LogType logType, LogLayer logLayer, string moduleName, string summary, string detail,
-			Model.Log.Context context = null)
+			Model.Business.Log.Context context = null)
 		{
-			var log = new Model.Log(Name)
+			var log = new Model.Business.Log(Name)
 			{
 				Type = logType,
 				Layer = logLayer,
@@ -82,8 +84,5 @@ namespace Norman.Log.Logger
 		{
 			throw new NotImplementedException();
 		}
-
-		public event LogReceivedEventHandler LogReceived;
-		public event ReporterSessionCreatedEventHandler ReporterSessionCreated;
 	}
 }

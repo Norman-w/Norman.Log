@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 using Norman.Log.Config;
+using Norman.Log.Model.Business;
 
 namespace Norman.Log.Component.FileWriter
 {
@@ -62,7 +63,7 @@ namespace Norman.Log.Component.FileWriter
 		/// <summary>
 		/// 待写入的日志
 		/// </summary>
-		private List<Model.Log> Logs { get; set; }
+		private List<Model.Business.Log> Logs { get; set; }
 		
 		/// <summary>
 		/// 日支池的创建时间
@@ -94,10 +95,10 @@ namespace Norman.Log.Component.FileWriter
 		/// <param name="log"></param>
 		/// <param name="maxSizeKbPerFile"></param>
 		/// <returns></returns>
-		public bool Push(Model.Log log, uint maxSizeKbPerFile)
+		public bool Push(Model.Business.Log log, uint maxSizeKbPerFile)
 		{
 			if (Logs == null)
-				Logs = new List<Model.Log>();
+				Logs = new List<Model.Business.Log>();
 			FileSizeBytes += (uint)log.ToBytes().Length;
 			//默认最少需要1段,也就是一个默认分段.
 			var howManyPartsNeed = (uint)(FileSizeBytes / 1024 / maxSizeKbPerFile) + 1;
@@ -208,7 +209,7 @@ namespace Norman.Log.Component.FileWriter
 		/// 如果缓冲中的日志条数达到最大值则写入文件
 		/// </summary>
 		/// <param name="log"></param>
-		public void AddLogToWaitingToWriteQueue(Model.Log log)
+		public void AddLogToWaitingToWriteQueue(Model.Business.Log log)
 		{
 			Util.CalcLogFileAndFolderName(log.LoggerName, DateTime.Now, _config, out var fileName, out var folderName);
 			var fileFullPathForIndex = Path.Combine(_config.RootPath, folderName, fileName);
@@ -357,8 +358,8 @@ namespace Norman.Log.Component.FileWriter
 				return Path.Combine(_config.RootPath, folderName, fileName);
 			}
 
-			return Path.Combine(_config.RootPath, folderName, fileName).Replace(Model.Constant.DefaultLogFileExtension,
-				$"_part{continuePart}.{Model.Constant.DefaultLogFileExtension}");
+			return Path.Combine(_config.RootPath, folderName, fileName).Replace(Constant.DefaultLogFileExtension,
+				$"_part{continuePart}.{Constant.DefaultLogFileExtension}");
 		}
 
 		/// <summary>

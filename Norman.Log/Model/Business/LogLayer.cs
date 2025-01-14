@@ -7,11 +7,11 @@
  控制器层
  外设层(如果是调用三方服务,就代表三方接口)
  */
+
 using System.Linq;
 using System.Reflection;
 
-
-namespace Norman.Log.Model
+namespace Norman.Log.Model.Business
 {
 	public partial class LogLayer
 	{

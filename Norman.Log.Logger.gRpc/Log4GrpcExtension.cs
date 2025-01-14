@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Norman.Log.Model;
+using Norman.Log.Model.Business;
 using Norman.Log.Server.Input;
 
 namespace Norman.Log.Logger.gRpc
@@ -11,7 +12,7 @@ namespace Norman.Log.Logger.gRpc
 		/// </summary>
 		/// <param name="log"></param>
 		/// <returns></returns>
-		public static ReportLogByGrpcRequest ToReportLogByGrpcRequest(this Model.Log log)
+		public static ReportLogByGrpcRequest ToReportLogByGrpcRequest(this Model.Business.Log log)
 		{
 			return new ReportLogByGrpcRequest
 			{
@@ -24,7 +25,7 @@ namespace Norman.Log.Logger.gRpc
 			};
 		}
 
-		private static LogContext ToGrpcLogContext(this Model.Log.Context context)
+		private static LogContext ToGrpcLogContext(this Model.Business.Log.Context context)
 		{
 			#region 值有效性验证
 

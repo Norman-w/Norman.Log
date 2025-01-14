@@ -42,7 +42,7 @@ public class Server
     /// </summary>
     /// <param name="reporter"></param>
     /// <param name="logEntry"></param>
-    public void HandleLog(ReporterClient? reporter, Log.Model.Log logEntry)
+    public void HandleLog(ReporterClient? reporter, Log.Model.Business.Log logEntry)
     {
         _logFileWriter?.AddLogToWaitingToWriteQueue(logEntry);
         _logDatabaseWriter?.AddLogToWaitingToWriteQueue(logEntry);

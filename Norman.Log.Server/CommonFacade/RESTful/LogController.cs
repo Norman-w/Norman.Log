@@ -231,10 +231,10 @@ public partial class LogController
 	[HttpPost("Report")]
 	public IActionResult Report(LogRecord4Net logRecord4Net)
 	{
-		Model.Log? log = null;
+		Model.Business.Log? log = null;
 		try
 		{
-			log = Model.Log.FromLogRecord4Net(logRecord4Net);
+			log = Model.Business.Log.FromLogRecord4Net(logRecord4Net);
 		}
 		catch (Exception e)
 		{

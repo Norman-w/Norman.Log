@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Norman.Log.Model.Business;
 
 namespace Norman.Log.Model
 {
@@ -37,7 +38,7 @@ namespace Norman.Log.Model
 		/// </summary>
 		public object LogContext { get; set; }
 		
-		public static LogRecord4Net FromLog(Log log)
+		public static LogRecord4Net FromLog(Business.Log log)
 		{
 			return new LogRecord4Net
 			{
