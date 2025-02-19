@@ -5,6 +5,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,6 +28,12 @@
       <ProjectReference Include="..\Norman.Log.Component.DatabaseWriter\Norman.Log.Component.DatabaseWriter.csproj" />
       <ProjectReference Include="..\Norman.Log.Component.FileWriter\Norman.Log.Component.FileWriter.csproj" />
       <ProjectReference Include="..\Norman.Log\Norman.Log.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
