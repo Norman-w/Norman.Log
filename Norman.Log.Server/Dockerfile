@@ -18,7 +18,7 @@
 #是不可行的,因为这样会导致无法找到要COPY的文件,因为上下文在当前目录,无法访问父级和兄弟文件夹中的文件内容
 
 
-FROM mcr.microsoft.com/dotnet/runtime:7.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
