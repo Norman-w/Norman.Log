@@ -30,6 +30,8 @@ COPY ["Norman.Log.Component.Database.Mysql/Norman.Log.Component.Database.Mysql.c
 COPY ["Norman.Log/Norman.Log.csproj", "Norman.Log/"]
 COPY ["Norman.Log.Component.DatabaseWriter/Norman.Log.Component.DatabaseWriter.csproj", "Norman.Log.Component.DatabaseWriter/"]
 COPY ["Norman.Log.Component.FileWriter/Norman.Log.Component.FileWriter.csproj", "Norman.Log.Component.FileWriter/"]
+#添加国内nuget源,否则在国内的网络环境下,nuget restore会很慢或者失败
+RUN dotnet nuget add source https://nuget.cdn.azure.cn/v3/index.json -n azure
 RUN dotnet restore "Norman.Log.Server/Norman.Log.Server.csproj"
 COPY . .
 WORKDIR "/src/Norman.Log.Server"
