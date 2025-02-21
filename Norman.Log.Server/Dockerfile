@@ -45,3 +45,8 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Norman.Log.Server.dll"]
+
+
+# 构建完成后,启动时不要忘记绑定端口:
+# docker run -p 10007:10007 norman.log.server:1.0
+# 随后访问 http://服务器的ip地址:10007/swagger/index.html 即可看到API文档

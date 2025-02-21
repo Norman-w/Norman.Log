@@ -37,4 +37,4 @@ https://aka.ms/dotnet-core-applaunch?framework=Microsoft.AspNetCore.App&framewor
 我尼玛!, 为啥? 
 因为 FROM mcr.microsoft.com/dotnet/runtime:7.0 AS base是错误的
 要用FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-
+![screenShot_swagger.png](screenShot_swagger.png)
