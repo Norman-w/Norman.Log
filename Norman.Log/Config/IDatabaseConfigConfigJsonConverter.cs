@@ -3,6 +3,11 @@ using Newtonsoft.Json;
 
 namespace Norman.Log.Config
 {
+	/// <summary>
+	/// 用于IDatabaseConfig的JsonConverter,由于我们在序列化和反序列化的时候无法使用接口,所以需要一个JsonConverter来帮助我们先判断类型,再序列化和反序列化
+	/// 至于为什么使用接口定义属性,是因为这样我们在使用时方便通过 if(instance is XXX)来判断类型
+	/// </summary>
+	// ReSharper disable once InconsistentNaming
 	public class IDatabaseConfigConfigJsonConverter : JsonConverter<IDatabaseConfig>
 	{
 		public override void WriteJson(JsonWriter writer, IDatabaseConfig value, JsonSerializer serializer)
@@ -20,20 +25,36 @@ namespace Norman.Log.Config
 		public override IDatabaseConfig ReadJson(JsonReader reader, Type objectType, IDatabaseConfig existingValue,
 			bool hasExistingValue, JsonSerializer serializer)
 		{
-			//先获取类型枚举字段的值
-			var jObject = serializer.Deserialize(reader) as Newtonsoft.Json.Linq.JObject;
-			if (jObject == null)
+			/*
+			 
+			 
+			 注意这里不能使用JObject.Load(reader)来读取,因为本身当前这个函数就是在读取的过程中调用的
+			 如果还使用JObject的话,则会导致递归调用.我们只能通过reader一点一点的读取才不会触发Attribute上的标记和默认的JsonConvert行为
+			
+			*/
+			while (reader.Read())
 			{
-				return null;
+				if (reader.TokenType == JsonToken.PropertyName &&
+				    reader.Value?.ToString() == nameof(IDatabaseConfig.DatabaseType))
+				{
+					reader.Read();
+					// var databaseTypeEnumAsInt = (int)reader.Value;
+					var databaseTypeEnumAsInt = Convert.ToInt32(reader.Value);
+					var databaseTypeEnum = (DatabaseTypeEnum)databaseTypeEnumAsInt;
+					//再根据类型来获取实际的配置类型
+					var configType = NormalDatabaseConfig.GetDatabaseConfigType(databaseTypeEnum);
+					//再根据类型来反序列化实例
+					var destTypeInstance = serializer.Deserialize(reader, configType);
+					return destTypeInstance as IDatabaseConfig;
+				}
+
+				if (reader.TokenType == JsonToken.EndObject)
+				{
+					break;
+				}
 			}
 
-			var databaseTypeEnumAsInt = jObject.Value<int>("DatabaseType");
-			var databaseTypeEnum = (DatabaseTypeEnum)databaseTypeEnumAsInt;
-			//再根据类型来获取实际的配置类型
-			var configType = NormalDatabaseConfig.GetDatabaseConfigType(databaseTypeEnum);
-			//再根据类型来反序列化实例
-			var destTypeInstance = serializer.Deserialize(jObject.CreateReader(), configType);
-			return destTypeInstance as IDatabaseConfig;
+			return null;
 		}
 	}
 }

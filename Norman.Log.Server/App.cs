@@ -21,7 +21,10 @@ public static class App
 
 	private static void Init()
 	{
-		NormanLogDbContext.ConnectionString = LogPersistenceConfig.LogToDatabase.DatabaseConfig.ToConnectionString();
+		if (LogPersistenceConfig.LogToDatabase is not { OnOff: true, DatabaseConfig: not null }) return;
+		
+		NormanLogDbContext.ConnectionString =
+			LogPersistenceConfig.LogToDatabase.DatabaseConfig.ToConnectionString();
 		Console.ForegroundColor = ConsoleColor.Green;
 		Console.WriteLine($"数据库连接字符串:{NormanLogDbContext.ConnectionString}");
 		Console.ResetColor();

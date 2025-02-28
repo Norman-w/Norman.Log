@@ -26,6 +26,19 @@ namespace Norman.Log.Config
 			}
 
 			var json = File.ReadAllText(path);
+			if (string.IsNullOrWhiteSpace(json))
+			{
+				if (tryCreateIfNotExist)
+				{
+					var defaultConfigJson = JsonConvert.SerializeObject(new T().GetDefault(), Formatting.Indented);
+					File.WriteAllText(path, defaultConfigJson);
+					json = defaultConfigJson;
+				}
+				else
+				{
+					throw new InvalidDataException($"配置文件为空: {path}");
+				}
+			}
 			return JsonConvert.DeserializeObject<T>(json);
 		}
 	}
