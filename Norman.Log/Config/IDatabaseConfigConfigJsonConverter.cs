@@ -18,8 +18,18 @@ namespace Norman.Log.Config
 			var configType = NormalDatabaseConfig.GetDatabaseConfigType(databaseTypeEnum);
 			//再根据类型来获取实际的实例
 			var destTypeInstance = Convert.ChangeType(value, configType);
-			//再序列化实例
-			serializer.Serialize(writer, destTypeInstance);
+			//再序列化实例,
+			
+			// 这里会递归的 要改进一下...需要用writer手动写入,不能直接使用serializer.Serialize
+			// serializer.Serialize(writer, destTypeInstance);
+			//当前层的所有字段都写入
+			writer.WriteStartObject();
+			foreach (var property in configType.GetProperties())
+			{
+				writer.WritePropertyName(property.Name);
+				serializer.Serialize(writer, property.GetValue(destTypeInstance));
+			}
+			writer.WriteEndObject();
 		}
 
 		public override IDatabaseConfig ReadJson(JsonReader reader, Type objectType, IDatabaseConfig existingValue,

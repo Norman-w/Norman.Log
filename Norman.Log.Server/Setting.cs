@@ -7,7 +7,7 @@ namespace Norman.Log.Server;
 /// <summary>
 /// 应用程序主设置,也就是Server的设置
 /// </summary>
-internal class Setting : ICommonConfig<Setting>
+internal class Setting : CommonConfig, ICommonConfig<Setting>
 {
 	/// <summary>
 	/// 是否开启随机日志生成器,用于测试,会生成大量的随机日志数据
@@ -55,17 +55,9 @@ internal class Setting : ICommonConfig<Setting>
 					ConnectionTypeEnum.Internal,
 					ConnectionTypeEnum.WebSocket
 				}
-			}
+			},
+			LogToFile = LogToFileConfig.Default
 		};
-	}
-
-	/// <summary>
-	/// 从json字符串中填充数据
-	/// </summary>
-	/// <param name="json"></param>
-	public void Populate(string json)
-	{
-		JsonConvert.PopulateObject(json, this);
 	}
 
 	/// <summary>
@@ -83,8 +75,9 @@ internal class Setting : ICommonConfig<Setting>
 
 		var json = File.ReadAllText(path);
 		JsonConvert.PopulateObject(json, this);
+		CurrentConfigFilePath = path;
 	}
-
+	
 	/// <summary>
 	/// 控制面板设置
 	/// </summary>

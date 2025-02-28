@@ -19,9 +19,44 @@ namespace Norman.Log.Config
 	public abstract partial class CommonConfig
 	{
 		#region 构造,初始,填充和工厂方法
+		
+		public static T CreateFromFile<T>(string path, bool tryCreateIfNotExist = false) where T : CommonConfig, ICommonConfig<T>, new()
+		{
+			if (!File.Exists(path))
+			{
+				if (tryCreateIfNotExist)
+				{
+					var defaultConfigJson = JsonConvert.SerializeObject(new T().GetDefault(), Formatting.Indented);
+					File.WriteAllText(path, defaultConfigJson);
+				}
+				else
+				{
+					throw new FileNotFoundException("配置文件不存在", path);
+				}
+			}
+
+			var json = File.ReadAllText(path);
+			if (string.IsNullOrWhiteSpace(json))
+			{
+				if (tryCreateIfNotExist)
+				{
+					var defaultConfigJson = JsonConvert.SerializeObject(new T().GetDefault(), Formatting.Indented);
+					File.WriteAllText(path, defaultConfigJson);
+					json = defaultConfigJson;
+				}
+				else
+				{
+					throw new InvalidDataException($"配置文件为空: {path}");
+				}
+			}
+			var result = new T();
+			result.Populate(json);
+			result.CurrentConfigFilePath = path;
+			return result;
+		}
 
 		/// <summary>
-		/// 从json字符串中创建一个LoggerConfig
+		/// 从json字符串中创建一个Config
 		/// </summary>
 		/// <param name="json"></param>
 		/// <returns></returns>
@@ -31,7 +66,7 @@ namespace Norman.Log.Config
 		}
 
 		/// <summary>
-		/// 从文件中加载LoggerConfig
+		/// 从文件中加载Config
 		/// </summary>
 		/// <param name="path"></param>
 		/// <param name="tryCreateIfNotExist"></param>
@@ -54,12 +89,15 @@ namespace Norman.Log.Config
 
 			var json = File.ReadAllText(path);
 			JsonConvert.PopulateObject(json, this);
+			CurrentConfigFilePath = path;
 		}
 
 		public void Populate(string json)
 		{
 			JsonConvert.PopulateObject(json, this);
 		}
+		
+		public string CurrentConfigFilePath { get; protected set; }
 
 		#endregion
 	}

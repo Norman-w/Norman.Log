@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Norman.Log.Component.Database.Mysql.Context;
 using Norman.Log.Config;
 
@@ -10,8 +11,7 @@ public static class App
 {
 	static App()
 	{
-		LogPersistenceConfig = ConfigFactory.CreateFromFile<LogPersistenceConfig>("LogPersistence.config", true);
-		Setting = ConfigFactory.CreateFromFile<Setting>("LogServer.setting", true);
+		Setting = CommonConfig.CreateFromFile<Setting>("LogServer.setting", true);
 		Server = new Core.Server();
 		
 		Init();
@@ -21,12 +21,20 @@ public static class App
 
 	private static void Init()
 	{
-		if (LogPersistenceConfig.LogToDatabase is not { OnOff: true, DatabaseConfig: not null }) return;
-		
-		NormanLogDbContext.ConnectionString =
-			LogPersistenceConfig.LogToDatabase.DatabaseConfig.ToConnectionString();
+		if (Setting.LogToDatabase is { OnOff: true, DatabaseConfig: not null })
+		{
+
+			NormanLogDbContext.ConnectionString =
+				Setting.LogToDatabase.DatabaseConfig.ToConnectionString();
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine($"数据库连接字符串:{NormanLogDbContext.ConnectionString}");
+			Console.ResetColor();
+		}
+		var currentSettingJson = JsonConvert.SerializeObject(Setting, Formatting.Indented);
+		//控制台输出当前所使用的配置文件都是哪些,方便调试
 		Console.ForegroundColor = ConsoleColor.Green;
-		Console.WriteLine($"数据库连接字符串:{NormanLogDbContext.ConnectionString}");
+		Console.WriteLine($"当前使用的LogServer设置文件(Setting):{Setting.CurrentConfigFilePath}");
+		Console.WriteLine($"当前使用的LogServer设置:{Environment.NewLine}{currentSettingJson}");
 		Console.ResetColor();
 	}
 
@@ -39,15 +47,6 @@ public static class App
 
 
 	#region 全局配置
-
-	#region LoggerConfig
-
-	/// <summary>
-	/// 日志持久化配置
-	/// </summary>
-	public static LogPersistenceConfig LogPersistenceConfig { get; }
-
-	#endregion
 
 	#region Setting
 
