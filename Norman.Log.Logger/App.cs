@@ -16,6 +16,13 @@ namespace Norman.Log.Logger
 	/// </summary>
 	public static class App
 	{
+		/// <summary>
+		/// 初始化静态成员
+		/// </summary>
+		static App()
+		{
+			//让引用的数据库知道连接配置
+		}
 		public static readonly LoggerConfig LoggerConfig 
 			= ConfigFactory.CreateFromFile<LoggerConfig>("logger.json", true);
 		private static LogFileWriter _logFileWriter;

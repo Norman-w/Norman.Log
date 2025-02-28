@@ -30,12 +30,12 @@ public class Server
     private readonly List<ReceiverClient> _receiverClients = new();
 
     private readonly LogFileWriter? _logFileWriter = 
-        App.LoggerConfig.LogToFile.OnOff ?
-        new LogFileWriter(App.LoggerConfig.LogToFile) : null;
+        App.LogPersistenceConfig.LogToFile.OnOff ?
+        new LogFileWriter(App.LogPersistenceConfig.LogToFile) : null;
     
     private readonly LogDatabaseWriter? _logDatabaseWriter = 
-        App.LoggerConfig.LogToDatabase.OnOff ?
-        new LogDatabaseWriter(App.LoggerConfig.LogToDatabase) : null;
+        App.LogPersistenceConfig.LogToDatabase.OnOff ?
+        new LogDatabaseWriter(App.LogPersistenceConfig.LogToDatabase) : null;
 
     /// <summary>
     /// 处理日志,当从网络/命名管道/内部调用的方式收到日志时,调用此函数

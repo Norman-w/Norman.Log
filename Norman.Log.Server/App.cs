@@ -1,3 +1,4 @@
+using Norman.Log.Component.Database.Mysql.Context;
 using Norman.Log.Config;
 
 namespace Norman.Log.Server;
@@ -9,10 +10,24 @@ public static class App
 {
 	static App()
 	{
-		LoggerConfig = ConfigFactory.CreateFromFile<LoggerConfig>("LoggerConfig.config", true);
-		Setting = ConfigFactory.CreateFromFile<Setting>("Setting.config", true);
+		LogPersistenceConfig = ConfigFactory.CreateFromFile<LogPersistenceConfig>("LogPersistence.config", true);
+		Setting = ConfigFactory.CreateFromFile<Setting>("LogServer.setting", true);
 		Server = new Core.Server();
+		
+		Init();
 	}
+
+	#region 全局初始化
+
+	private static void Init()
+	{
+		NormanLogDbContext.ConnectionString = LogPersistenceConfig.LogToDatabase.DatabaseConfig.ToConnectionString();
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine($"数据库连接字符串:{NormanLogDbContext.ConnectionString}");
+		Console.ResetColor();
+	}
+
+	#endregion
 
 	/// <summary>
 	///     core server的实例
@@ -25,9 +40,9 @@ public static class App
 	#region LoggerConfig
 
 	/// <summary>
-	///     日志记录器设置
+	/// 日志持久化配置
 	/// </summary>
-	public static LoggerConfig LoggerConfig { get; }
+	public static LogPersistenceConfig LogPersistenceConfig { get; }
 
 	#endregion
 

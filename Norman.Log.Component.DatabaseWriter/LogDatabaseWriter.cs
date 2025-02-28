@@ -143,6 +143,16 @@ namespace Norman.Log.Component.DatabaseWriter
 
 			#endregion
 			_config = config;
+
+			#region 将ConnectionString和ServerVersion设置到DbContext中
+			
+			NormanLogDbContext.ConnectionString = _config.DatabaseConfig.ToConnectionString();
+			if (!string.IsNullOrWhiteSpace(_config.DatabaseConfig.ServerVersion))
+			{
+				NormanLogDbContext.ServerVersion = _config.DatabaseConfig.ServerVersion;
+			}
+			
+			#endregion
 			errorMessage = string.Empty;
 			return true;
 		}
