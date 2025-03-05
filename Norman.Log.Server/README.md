@@ -1,6 +1,9 @@
 # 说明
 
-该项目主要提供:
+## Docker部署
+使用终端或Teamcity的Command line执行[deploy.sh](deploy.sh)
+
+## 项目功能
 
 * 提供接收日志的接口,使用WebSocket/gRPC/命名管道
 * 提供推送给各个端的接口,使用WebSocket/gRPC/命名管道
@@ -8,6 +11,10 @@
 * 提供类似于文件写入器的缓存内核,用于降低IO压力,异步写入日志(到文件/数据库),异步推送日志
 * 用于状态监控/控制面板的接口,通过WebSocket提供
 
+
+## 一些部署中遇到的问题
+
+### 无网络
 部署中遇到ip addr show dev docker0的状态始终显示为DOWN
 各种启动啊,修改配置啥的全都不管用.
 后来关闭了softether client以后,重新使用AccountConnect xxx连上了以后, vpn的ip, route全都没有了 手动设置了以后才可以
@@ -16,7 +23,7 @@
 
 可以了以后就构建该镜像,构建完了以后:
 
-
+### 无法启动(缺少.NET)
 norman@norman-ThinkPad-S3-S440:/tmp/norman.log.server.dev/Norman.Log/Norman.Log.Server$ docker run norman.log.server
 You must install or update .NET to run this application.
 
